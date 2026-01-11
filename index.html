@@ -180,6 +180,69 @@
         margin: 0 auto 20px;
       }
     }
+
+    /* ---------- MOBILE FIX ---------- */
+@media (max-width: 900px) {
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-bottom: 1px solid var(--border);
+    border-right: none;
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .sidebar-avatar {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px;
+  }
+
+  .sidebar-name {
+    font-size: 1.3rem;
+  }
+
+  .sidebar-bio {
+    max-width: 320px;
+    margin: 10px auto 20px;
+  }
+
+  .sidebar-links {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .container {
+    padding: 28px 24px 64px;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .brand {
+    display: none; /* prevents name duplication on mobile */
+  }
+
+  .tabs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .tabs button {
+    margin-left: 0;
+  }
+}
+
+
+
+    
   </style>
 </head>
 
