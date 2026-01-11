@@ -6,151 +6,241 @@
   <title>Kelvin Anowu | Data Scientist</title>
 
   <style>
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                 Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.7;
-    max-width: 960px;
-    margin: 60px auto;
-    padding: 0 24px;
-    color: #1f2933;
-    background-color: #ffffff;
-  }
+    :root {
+      --primary: #4f46e5;
+      --secondary: #0f172a;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --muted: #64748b;
+    }
 
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.25rem;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #e5e7eb;
-    padding-bottom: 0.5rem;
-  }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--secondary);
+    }
 
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-  }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 24px 80px;
+    }
 
-  .subtitle {
-    color: #6b7280;
-    font-size: 1.1rem;
-    margin-bottom: 2.5rem;
-  }
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
 
-  .section {
-    margin-top: 3.5rem;
-  }
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
 
-  .project {
-    background: #f9fafb;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 1.5rem;
-  }
+    .tabs button {
+      background: none;
+      border: none;
+      font-size: 1rem;
+      margin-left: 20px;
+      cursor: pointer;
+      color: var(--muted);
+      position: relative;
+    }
 
-  .project p {
-    margin: 0.6rem 0;
-  }
+    .tabs button.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
 
-  a {
-    color: #2563eb;
-    text-decoration: none;
-    font-weight: 500;
-  }
+    .tabs button.active::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+    }
 
-  a:hover {
-    text-decoration: underline;
-  }
+    /* Avatar */
+    .avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+    }
 
-  .contact a {
-    margin-right: 12px;
-  }
-</style>
+    /* Sections */
+    .section {
+      display: none;
+      animation: fade 0.4s ease;
+    }
 
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Home */
+    .home {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .home-text h1 {
+      font-size: 2.6rem;
+      margin: 0;
+    }
+
+    .home-text p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin-top: 24px;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .project h3 {
+      margin-top: 0;
+    }
+
+    .project p {
+      color: var(--muted);
+    }
+
+    .project a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .home {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>Kelvin Anowu</h1>
-  <p class="subtitle">Data Scientist</p>
+  <div class="container">
 
-  <div class="section">
-    <div class="section">
-  <h2>About</h2>
-  <p>
-    I am a Data Scientist who focuses on turning raw, often messy data into
-    insights that support better decisions.
-  </p>
-  <p>
-    My work typically involves exploratory data analysis, data cleaning,
-    feature engineering, and building analytical or machine learning models
-    with a strong emphasis on interpretability and real-world relevance.
-  </p>
-  <p>
-    I am particularly interested in problems where data quality is imperfect
-    and the value lies in asking the right questions, not just optimizing metrics.
-  </p>
-</div>
+    <!-- Header -->
+    <div class="header">
+      <div class="brand">Kelvin Anowu</div>
+      <div class="tabs">
+        <button class="active" onclick="showTab('home')">Home</button>
+        <button onclick="showTab('about')">About</button>
+        <button onclick="showTab('projects')">Projects</button>
+      </div>
+    </div>
 
+    <!-- HOME -->
+    <div id="home" class="section active">
+      <div class="home">
+        <img src="assets/avatar.jpg" class="avatar" alt="Avatar" />
+        <div class="home-text">
+          <h1>Data Scientist</h1>
+          <p>
+            I turn real-world, messy data into insights that drive better
+            decisions — with a strong focus on clarity, reasoning, and impact.
+          </p>
+        </div>
+      </div>
+    </div>
 
-  <div class="section">
-    <h2>Projects</h2>
+    <!-- ABOUT -->
+    <div id="about" class="section">
+      <div class="card">
+        <img src="assets/avatar.jpg" class="avatar" alt="Avatar" />
+        <h2>About Me</h2>
+        <p>
+          I am a Data Scientist with a strong interest in solving practical
+          problems using data, rather than optimizing models in isolation.
+        </p>
+        <p>
+          My work spans exploratory data analysis, data cleaning, feature
+          engineering, and building interpretable models that inform decisions
+          stakeholders can actually trust.
+        </p>
+      </div>
+    </div>
 
-   <div class="project">
-  <h3>Employee Attrition Analysis</h3>
+    <!-- PROJECTS -->
+    <div id="projects" class="section">
+      <div class="projects-grid">
 
-  <p>
-    <strong>Problem:</strong><br/>
-    Understanding the factors contributing to employee attrition in an
-    organization using a small, imperfect HR dataset.
-  </p>
+        <div class="card project">
+          <h3>Employee Attrition Analysis</h3>
+          <p>
+            Identified key drivers of employee turnover using a noisy HR
+            dataset, focusing on satisfaction and compensation patterns.
+          </p>
+          <p><strong>Tools:</strong> Python, Pandas, SQL</p>
+          <a href="#">View Project →</a>
+        </div>
 
-  <p>
-    <strong>Data:</strong><br/>
-    A dataset containing employee demographics, job roles, satisfaction
-    levels, compensation, and tenure, with missing values and inconsistent
-    formats.
-  </p>
+        <div class="card project">
+          <h3>SQL Analytics Case Study</h3>
+          <p>
+            Designed analytical queries to surface business insights from
+            relational data using joins and window functions.
+          </p>
+          <p><strong>Tools:</strong> SQL Server</p>
+          <a href="#">View Project →</a>
+        </div>
 
-  <p>
-    <strong>Approach:</strong><br/>
-    Performed exploratory data analysis, cleaned and standardized features,
-    engineered relevant variables, and evaluated classification models to
-    identify key attrition drivers.
-  </p>
-
-  <p>
-    <strong>Key Insights:</strong><br/>
-    Employee satisfaction and compensation bands showed the strongest
-    association with attrition, suggesting retention efforts should focus on
-    role alignment and pay equity rather than tenure alone.
-  </p>
-
-  <p>
-    <strong>Tools:</strong> Python, Pandas, SQL
-  </p>
-
-  <p>
-    <a href="#">View code on GitHub</a>
-  </p>
-</div>
-
+      </div>
+    </div>
 
   </div>
 
-  <div class="section contact">
-  <h2>Contact</h2>
-  <p>
-    <a href="https://github.com/ugochukwu11-glitch">GitHub</a>
-    <a href="#">LinkedIn</a>
-    <a href="mailto:youremail@example.com">Email</a>
-  </p>
-</div>
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.section').forEach(
+        section => section.classList.remove('active')
+      );
+      document.querySelectorAll('.tabs button').forEach(
+        btn => btn.classList.remove('active')
+      );
 
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
