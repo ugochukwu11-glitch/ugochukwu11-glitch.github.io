@@ -11,9 +11,12 @@
   --primary: #4f46e5;
   --bg: #f8fafc;
   --card: #ffffff;
-  --text: #0f172a;
-  --muted: #64748b;
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-heading: #020617;
   --border: #e5e7eb;
+  --link: #2563eb;
 }
 
 /* Dark mode */
@@ -21,10 +24,14 @@ body.dark {
   --primary: #818cf8;
   --bg: #0b1220;
   --card: #111827;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
+
+  --text-main: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-heading: #f8fafc;
   --border: #1f2937;
+  --link: #93c5fd;
 }
+
 
 
     * {
@@ -44,6 +51,32 @@ body.dark {
        transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
 
+    body,
+    .card,
+    h1, h2, h3,
+    p,
+   a {
+       transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+   }
+
+
+    .subtitle {
+       color: var(--text-muted);
+     }
+
+    .project p,
+    .card p {
+     color: var(--text-muted);
+   }
+
+    a {
+     color: var(--link);
+   }
+
+    a:hover {
+      text-decoration: underline;
+   }
+
 
     .container {
       max-width: 1000px;
@@ -52,8 +85,12 @@ body.dark {
     }
 
     h2 {
-  border-bottom: 2px solid var(--border);
-}
+      border-bottom: 2px solid var(--border);
+    }
+    
+    h1, h2, h3 {
+      color: var(--text-heading);
+    }
 
     .subtitle,
     .project p {
@@ -82,7 +119,7 @@ body.dark {
       font-size: 1rem;
       margin-left: 20px;
       cursor: pointer;
-      color: var(--muted);
+      color: var(--text-muted);
       position: relative;
     }
 
