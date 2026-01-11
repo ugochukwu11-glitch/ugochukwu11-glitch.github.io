@@ -32,214 +32,153 @@ body.dark {
   --link: #93c5fd;
 }
 
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+a {
+  color: var(--link);
+  text-decoration: none;
+}
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--secondary);  
-    }
+a:hover {
+  text-decoration: underline;
+}
 
-    body,
-    .card {
-       transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
+h1, h2, h3 {
+  color: var(--text-heading);
+}
 
-    body,
-    .card,
-    h1, h2, h3,
-    p,
-   a {
-       transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-   }
+.subtitle,
+p {
+  color: var(--text-main);
+}
 
+.muted {
+  color: var(--text-muted);
+}
 
-    .subtitle {
-       color: var(--text-muted);
-     }
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 40px 24px 80px;
+}
 
-    .project p,
-    .card p {
-     color: var(--text-muted);
-   }
+h2 {
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 6px;
+}
 
-    a {
-     color: var(--link);
-   }
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
 
-    a:hover {
-      text-decoration: underline;
-   }
+.brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+}
 
+.tabs button {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  margin-left: 20px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
 
-    .container {
-      max-width: 1000px;
-      margin: auto;
-      padding: 40px 24px 80px;
-    }
+.tabs button.active {
+  color: var(--primary);
+  font-weight: 600;
+}
 
-    h2 {
-      border-bottom: 2px solid var(--border);
-    }
-    
-    h1, h2, h3 {
-      color: var(--text-heading);
-    }
+/* Layout */
+.home {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}
 
-    .subtitle,
-    .project p {
-       color: var(--muted);
-    }
+/* Avatar + info */
+.profile {
+  text-align: left;
+}
 
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  object-fit: cover;
+}
 
-    
-    /* Header */
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 40px;
-    }
+.profile-info {
+  margin-top: 20px;
+  font-size: 0.95rem;
+}
 
-    .brand {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
+.profile-info div {
+  margin-bottom: 8px;
+}
 
-    .tabs button {
-      background: none;
-      border: none;
-      font-size: 1rem;
-      margin-left: 20px;
-      cursor: pointer;
-      color: var(--text-muted);
-      position: relative;
-    }
-
-    .tabs button.active {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    .tabs button.active::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: -6px;
-      width: 100%;
-      height: 2px;
-      background: var(--primary);
-    }
-
-    /* Avatar */
-    .avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--primary);
-    }
-
-    /* Sections */
-    .section {
-      display: none;
-      animation: fade 0.4s ease;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Home */
-    .home {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .home-text h1 {
-      font-size: 2.6rem;
-      margin: 0;
-    }
-
-    .home-text p {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 520px;
-    }
-
-    /* Cards */
-    .card {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      margin-top: 24px;
-    }
-
-    /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .project h3 {
-      margin-top: 0;
-    }
-
-    .project p {
-      color: var(--muted);
-    }
-
-    .project a {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    /* Motion polish */
+/* Cards */
 .card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 24px;
+  margin-top: 24px;
+  border: 1px solid var(--border);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
 }
 
-.tabs button {
-  transition: color 0.2s ease;
+/* Sections */
+.section {
+  display: none;
 }
 
-.tabs button::after {
-  transition: width 0.25s ease;
+.section.active {
+  display: block;
 }
 
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
 
+/* Responsive */
+@media (max-width: 800px) {
+  .home {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
 
-    
+  .profile {
+    align-items: center;
+  }
+}
 
-    /* Responsive */
-    @media (max-width: 700px) {
-      .home {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
   </style>
 </head>
 
@@ -262,18 +201,37 @@ body.dark {
 
     <!-- HOME -->
     <div id="home" class="section active">
-      <div class="home">
-        <img src="assets/avatar.jpg" class="avatar" alt="Avatar" />
-        <div class="home-text">
-          <h1>Data Scientist</h1>
-          <p>
-            I turn real-world, messy data into insights that drive better
-            decisions — with a strong focus on clarity, reasoning, and impact.
-          </p>
-        </div>
+  <div class="home">
+
+    <div class="profile">
+      <img src="assets/avatar.jpg" class="avatar" alt="Avatar" />
+      <div class="profile-info muted">
+        <div>📍 Earth</div>
+        <div>📧 <a href="mailto:you@example.com">Email</a></div>
+        <div>🐙 <a href="https://github.com/ugochukwu11-glitch">GitHub</a></div>
+        <div>🔗 <a href="#">LinkedIn</a></div>
+        <div>𝕏 <a href="#">X</a></div>
       </div>
     </div>
 
+    <div>
+      <h1>Data Scientist</h1>
+      <p class="muted">
+        I turn real-world, messy data into insights that drive better decisions
+        with an emphasis on clarity, reasoning, and business impact.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+    
     <!-- ABOUT -->
     <div id="about" class="section">
       <div class="card">
@@ -302,7 +260,9 @@ body.dark {
             dataset, focusing on satisfaction and compensation patterns.
           </p>
           <p><strong>Tools:</strong> Python, Pandas, SQL</p>
-          <a href="#">View Project →</a>
+          <a href="projects/attrition.html">View Project →</a>
+
+
         </div>
 
         <div class="card project">
