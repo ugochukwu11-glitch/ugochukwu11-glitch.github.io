@@ -179,12 +179,87 @@ h2 {
   }
 }
 
+
+    /* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 40px 24px;
+}
+
+.sidebar-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  margin-bottom: 20px;
+  object-fit: cover;
+}
+
+.sidebar-name {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--text-heading);
+}
+
+.sidebar-bio {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 12px 0 24px;
+}
+
+.sidebar-links div {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.sidebar-links a {
+  color: var(--link);
+}
+
+/* Main container shift */
+.container {
+  padding: 40px 48px 80px;
+  max-width: 900px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .sidebar-avatar {
+    margin: 0 auto 20px;
+  }
+}
+
+
+
+
+
+
+    
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+  <div class="layout">
 
     <!-- Header -->
     <div class="header">
@@ -318,4 +393,32 @@ h2 {
   </script>
 
 </body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <img src="assets/avatar.jpg" class="sidebar-avatar" alt="Avatar">
+
+    <h2 class="sidebar-name">Kelvin Anowu</h2>
+    <p class="sidebar-bio">
+      Data Scientist focused on analytics, decision-making, and real-world impact.
+    </p>
+
+    <div class="sidebar-links">
+      <div>📍 Earth</div>
+      <div>✉️ <a href="mailto:you@example.com">Email</a></div>
+      <div>🐙 <a href="https://github.com/ugochukwu11-glitch">GitHub</a></div>
+      <div>🔗 <a href="#">LinkedIn</a></div>
+      <div>𝕏 <a href="#">X</a></div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+  </main>
+</div>
+
+
+  
 </html> 
