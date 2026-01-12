@@ -83,135 +83,214 @@ p {
 
   <a href="../index.html" class="back-link">← Back to portfolio</a>
 
-  <h1>DS Dominion</h1>
+  <h1>InsightBot</h1>
   <p class="muted">
-    A decision-focused data science project exploring how structured analysis
-    can support clearer, more confident outcomes.
+    A multilingual, data science–driven news aggregation and insight platform
+    designed to extract, structure, and visualize global news trends at scale.
   </p>
 
   <!-- PROBLEM -->
   <section class="section">
-    <h2>Problem Context</h2>
+    <h2>Problem Definition</h2>
     <div class="card">
       <p>
-        The core challenge addressed in this project was understanding how
-        different data signals interact to influence outcomes within a complex
-        system. Rather than focusing on a single metric, the goal was to
-        investigate patterns, relationships, and constraints that impact
-        decision-making.
+        The modern information landscape is saturated with news content published
+        continuously across hundreds of platforms, regions, and languages.
+        While access to information has increased, the ability to extract
+        meaningful insights from this volume of data has significantly declined.
       </p>
 
       <p>
-        The problem space involved ambiguity, incomplete data, and trade-offs —
-        conditions that reflect many real operational environments. This made
-        it important to prioritize reasoning and clarity over purely
-        optimization-driven approaches.
+        Readers, analysts, and decision-makers face three core challenges:
+      </p>
+
+      <ul>
+        <li>Information overload from unstructured news sources</li>
+        <li>Inconsistent formats, languages, and publishing styles</li>
+        <li>Lack of high-level insight into emerging trends and topics</li>
+      </ul>
+
+      <p>
+        The problem InsightBot addresses is not simply data collection, but
+        <strong>transforming raw, unstructured web news into structured,
+        analyzable, and visual insights</strong> that support faster
+        understanding and decision-making.
+      </p>
+    </div>
+  </section>
+
+  <!-- DESIGN -->
+  <section class="section">
+    <h2>Design Specifications</h2>
+    <div class="card">
+      <p>
+        InsightBot was designed with the following system requirements in mind:
+      </p>
+
+      <ul>
+        <li>Automated extraction of news headlines and article bodies</li>
+        <li>Support for multiple languages and regions</li>
+        <li>Pattern-based generalization rather than site-by-site hardcoding</li>
+        <li>Structured storage suitable for analytics and visualization</li>
+        <li>Clear separation between data extraction, storage, and presentation</li>
+      </ul>
+
+      <p>
+        To meet these goals, the system avoids heavy browser automation and instead
+        relies on intelligent HTML parsing, heuristic link validation, and
+        scalable rule-based extraction strategies.
       </p>
     </div>
   </section>
 
   <!-- DATA -->
   <section class="section">
-    <h2>Data Overview</h2>
+    <h2>Data Sources & Test Data</h2>
     <div class="card">
       <p>
-        The dataset used in DS Dominion combined multiple structured sources,
-        each representing a different aspect of the system. As is often the
-        case in real-world data, the raw inputs required cleaning, validation,
-        and careful interpretation before analysis could begin.
-      </p>
-
-      <p>
-        Key steps included:
+        The project uses real-world news websites as its primary data source.
+        Two datasets were created in alignment with the SRS:
       </p>
 
       <ul>
-        <li>Handling missing and inconsistent records</li>
-        <li>Normalizing features for comparability</li>
-        <li>Identifying and correcting data quality issues</li>
-        <li>Reducing noise while preserving meaningful signals</li>
+        <li><strong>Training Set:</strong> 40 known news websites used to refine scraping heuristics</li>
+        <li><strong>Testing Set:</strong> 10 unseen websites used to evaluate generalization</li>
       </ul>
-    </div>
-  </section>
 
-  <!-- APPROACH -->
-  <section class="section">
-    <h2>Analytical Approach</h2>
-    <div class="card">
       <p>
-        Rather than immediately applying complex models, the project emphasized
-        exploration and interpretability. The analysis followed a structured
-        progression:
+        Extracted fields include:
       </p>
 
       <ul>
-        <li>Exploratory data analysis to surface trends and anomalies</li>
-        <li>Feature examination to understand influence and relevance</li>
-        <li>Incremental modeling focused on explainability</li>
-        <li>Validation through sanity checks and domain reasoning</li>
+        <li>Article URL</li>
+        <li>Headline (title)</li>
+        <li>Full article body</li>
+        <li>Publication date</li>
+        <li>Article length</li>
+        <li>Source domain</li>
       </ul>
 
       <p>
-        This approach ensured that each step could be explained and justified,
-        reducing the risk of overfitting or misleading conclusions.
+        This approach ensured the system was evaluated under realistic,
+        unpredictable web conditions.
       </p>
     </div>
   </section>
 
-  <!-- INSIGHTS -->
+  <!-- ARCHITECTURE -->
   <section class="section">
-    <h2>Key Insights</h2>
+    <h2>System Architecture</h2>
     <div class="card">
       <p>
-        The analysis revealed that outcomes were driven less by isolated factors
-        and more by the interaction between multiple variables. In several
-        cases, commonly assumed drivers showed weaker influence than expected,
-        while secondary features played a larger role.
-      </p>
-
-      <p>
-        These findings reinforced the value of:
+        InsightBot follows a modular pipeline architecture:
       </p>
 
       <ul>
-        <li>Looking beyond surface-level correlations</li>
-        <li>Contextualizing metrics within system constraints</li>
-        <li>Balancing quantitative results with practical interpretation</li>
+        <li><strong>Web Scraper:</strong> Extracts links and article content using heuristics</li>
+        <li><strong>Validation Layer:</strong> Filters non-article pages and low-quality content</li>
+        <li><strong>Storage Layer:</strong> Structured persistence in MySQL and CSV</li>
+        <li><strong>API Layer:</strong> Flask endpoints for Tableau and frontend consumption</li>
+        <li><strong>Visualization Layer:</strong> Tableau dashboards for aggregated insights</li>
       </ul>
+
+      <p>
+        Each layer operates independently, improving maintainability and making
+        the system easier to extend or debug.
+      </p>
     </div>
   </section>
 
-  <!-- TOOLS -->
+  <!-- ANALYTICS -->
   <section class="section">
-    <h2>Tools & Technologies</h2>
+    <h2>Analytics & Visualization</h2>
     <div class="card">
       <p>
-        The project was implemented using a combination of analytical and
-        programming tools, including:
+        Tableau was used to convert structured news data into meaningful insights.
+        Key analyses include:
       </p>
 
       <ul>
-        <li>Python (Pandas, NumPy)</li>
-        <li>SQL for structured data exploration</li>
-        <li>Visualization libraries for analysis and validation</li>
+        <li>Daily and monthly news volume trends</li>
+        <li>Top publishing sources by article count</li>
+        <li>Most frequent keywords appearing in headlines</li>
+        <li>Article length distribution across sources</li>
       </ul>
+
+      <p>
+        These visualizations allow users to identify content patterns, dominant
+        topics, and emerging trends at a glance — directly aligning with the
+        SRS requirement for aggregated news insights.
+      </p>
+    </div>
+  </section>
+
+  <!-- CHALLENGES -->
+  <section class="section">
+    <h2>Challenges & Limitations</h2>
+    <div class="card">
+      <p>
+        Several real-world challenges were encountered during development:
+      </p>
+
+      <ul>
+        <li>Inconsistent HTML structures across news websites</li>
+        <li>Mixed date formats requiring normalization</li>
+        <li>Dynamic and JavaScript-heavy pages limiting extraction</li>
+        <li>Language detection inconsistencies in visualization tools</li>
+      </ul>
+
+      <p>
+        These challenges highlighted the complexity of working with uncontrolled
+        web data and reinforced the need for robust validation and fallback logic.
+      </p>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section class="section">
+    <h2>Installation & Execution</h2>
+    <div class="card">
+      <p>
+        To run the project locally:
+      </p>
+
+      <ul>
+        <li>Install Python 3.10+</li>
+        <li>Install dependencies from <code>requirements.txt</code></li>
+        <li>Configure MySQL database and credentials</li>
+        <li>Run the scraper in training or testing mode</li>
+        <li>Launch the Flask application</li>
+        <li>Connect Tableau via the Flask API</li>
+      </ul>
+
+      <p>
+        The modular design allows individual components to be tested independently.
+      </p>
     </div>
   </section>
 
   <!-- REFLECTION -->
   <section class="section">
-    <h2>Reflection</h2>
+    <h2>Reflection & Learnings</h2>
     <div class="card">
       <p>
-        DS Dominion reinforced the importance of discipline in data science —
-        especially in resisting the urge to overcomplicate solutions. Clear
-        framing, thoughtful exploration, and transparent reasoning proved more
-        valuable than complexity alone.
+        InsightBot demonstrates how data science extends beyond modeling into
+        systems thinking, data engineering, and interpretability.
       </p>
 
       <p>
-        The project highlights how data science can function as a decision
-        support tool when grounded in clarity, context, and careful judgment.
+        The project reinforced the importance of:
+      </p>
+
+      <ul>
+        <li>Asking the right questions before writing code</li>
+        <li>Designing for imperfect, real-world data</li>
+        <li>Balancing automation with explainability</li>
+      </ul>
+
+      <p>
+        Ultimately, InsightBot is a practical example of how data science can
+        transform unstructured information into actionable insight.
       </p>
     </div>
   </section>
