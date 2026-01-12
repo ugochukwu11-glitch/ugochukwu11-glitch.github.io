@@ -917,6 +917,63 @@ p { line-height: 1.6; }
     transform: scale(0.98);
   }
 }
+
+
+/* Make whole project card clickable */
+.project-card-link {
+  text-decoration: none;
+  display: block;
+}
+
+/* Card interaction */
+.project-card {
+  cursor: pointer;
+  transition: transform 0.25s ease,
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+  border: 2px solid var(--border);
+}
+
+/* Hover & focus state */
+.project-card:hover,
+.project-card-link:focus-visible .project-card {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 48px rgba(79, 70, 229, 0.25);
+  border-color: var(--primary);
+}
+
+/* CTA styling */
+.project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* Arrow animation */
+.project-card:hover .project-cta .arrow {
+  transform: translateX(6px);
+}
+
+.project-cta .arrow {
+  transition: transform 0.2s ease;
+}
+
+/* Mobile tap feedback */
+.project-card:active {
+  transform: scale(0.98);
+}
+
+
+
+
+
+
+
+  
 </style>
 </head>
 
@@ -1171,21 +1228,26 @@ p { line-height: 1.6; }
         <a href="projects/attrition.html">View Project →</a>
       </div>
 
-   <div class="card">
-  <h3>InsightBot (DS Dominion)</h3>
-  <p class="muted">
-    A full-stack, data science–driven news aggregation and insight platform that
-    extracts, structures, and visualizes global news trends across multiple
-    sources and regions.
-  </p>
-  <p><strong>Focus:</strong> Web scraping, data engineering, analytics, visualization</p>
-  <p><strong>Tools:</strong> Python, SQL, Flask, MySQL, Tableau</p>
-  <p class="muted">
-    <em>Built by my team and I for a global data science competition. Finished 4th place
-    and received Jury Mention by Aptech.</em>
-  </p>
-  <a href="projects/ds-dominion.html">View Project →</a>
-</div>
+   <a href="../projects/ds-dominion.html" class="project-card-link">
+  <div class="card project-card">
+    <h3>InsightBot (DS Dominion)</h3>
+
+    <p class="muted">
+      A full-stack, data science–driven news aggregation and insight platform
+      that extracts, structures, and visualizes global news trends across
+      multiple sources and regions.
+    </p>
+
+    <p><strong>Focus:</strong> Web scraping, data engineering, analytics, visualization</p>
+    <p><strong>Tools:</strong> Python, SQL, Flask, MySQL, Tableau</p>
+
+    <div class="project-cta">
+      <span>View Project</span>
+      <span class="arrow">→</span>
+    </div>
+  </div>
+</a>
+
 
     </div>
     
