@@ -14,53 +14,52 @@
   --text-muted: #475569;
   --text-heading: #020617;
   --border: #e5e7eb;
-  --link: #2563eb;
 }
 
 body.dark {
   --primary: #818cf8;
   --bg: #0b1220;
   --card: #111827;
-  --text-main: #e5e7eb;
+  --text-main: #f8fafc;
   --text-muted: #9ca3af;
-  --text-heading: #f8fafc;
+  --text-heading: #ffffff;
   --border: #1f2937;
-  --link: #93c5fd;
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
   background: var(--bg);
   color: var(--text-main);
   transition: background .3s,color .3s;
 }
 
-a { color: var(--link); text-decoration: none; }
+a { color: inherit; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-h1,h2,h3 { color: var(--text-heading); }
+h1,h2,h3 { color: var(--text-heading); margin-top: 0; }
+p { line-height: 1.6; }
+
 .muted { color: var(--text-muted); }
 
-/* Layout */
 .layout {
   display: grid;
   grid-template-columns: 300px 1fr;
   min-height: 100vh;
 }
 
-/* Sidebar */
+/* SIDEBAR */
 .sidebar {
+  padding: 40px 28px;
   background: var(--card);
   border-right: 1px solid var(--border);
-  padding: 40px 24px;
 }
 
 .sidebar-avatar {
-  width: 180px;
-  height: 180px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   border: 4px solid var(--primary);
   object-fit: cover;
@@ -68,58 +67,49 @@ h1,h2,h3 { color: var(--text-heading); }
 }
 
 .sidebar-name {
-  margin: 0;
   font-size: 1.4rem;
+  margin-bottom: 6px;
 }
 
 .sidebar-bio {
   font-size: .95rem;
-  margin: 12px 0 20px;
+  margin-bottom: 28px;
 }
 
-/* Links */
 .sidebar-links div {
-  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: .95rem;
+  margin-bottom: 14px;
+  color: var(--text-main);
 }
 
-/* Follow (mobile only) */
-.follow-btn {
-  display: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: none;
-  cursor: pointer;
-  margin-bottom: 10px;
+.sidebar-links svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--text-muted);
 }
 
-.follow-popup {
-  display: none;
-  margin-top: 10px;
-}
-
-/* Main */
+/* MAIN */
 .container {
-  padding: 40px 48px 80px;
+  padding: 40px 56px 80px;
   max-width: 960px;
 }
 
-/* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 
 .brand {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--primary);
 }
 
-/* Desktop Nav */
 .desktop-nav button {
   background: none;
   border: none;
@@ -134,76 +124,68 @@ h1,h2,h3 { color: var(--text-heading); }
   font-weight: 600;
 }
 
-/* Mobile */
-.mobile-nav { display: none; gap: 16px; }
-
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 220px;
-  height: 100vh;
-  background: var(--card);
-  padding: 80px 20px;
-  box-shadow: -8px 0 24px rgba(0,0,0,.25);
-  z-index: 1000;
-}
-
-.mobile-menu button {
-  width: 100%;
-  background: none;
-  border: none;
-  text-align: left;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  color: var(--text-main);
-}
-
-/* Sections */
 .section { display: none; }
 .section.active { display: block; }
 
-/* Cards */
+/* HOMEPAGE CONTENT */
+.hero {
+  margin-bottom: 60px;
+}
+
+.hero h1 {
+  font-size: 2.6rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 600px;
+}
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.pillar {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+  background: var(--card);
+}
+
+.pillar h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 24px;
+}
+
 .card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 24px;
-  margin-top: 24px;
   transition: transform .25s, box-shadow .25s;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.15);
+  box-shadow: 0 12px 32px rgba(0,0,0,.18);
 }
 
-.projects-grid {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-}
-
-/* Mobile behaviour */
+/* MOBILE */
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; }
-  .sidebar {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    text-align: center;
-  }
-  .sidebar-avatar {
-    margin: 0 auto 16px;
-    width:140px;
-    height:140px;
-  }
-  .sidebar-links { display: none; }   /* hide links */
-  .follow-btn { display: inline-block; }
-  .brand { display: none; }
-  .desktop-nav { display: none; }
-  .mobile-nav { display: flex; }
-  .container { padding: 28px 24px 64px; }
+  .sidebar { text-align: center; border-right: none; border-bottom: 1px solid var(--border); }
+  .sidebar-avatar { margin: 0 auto 16px; }
+  .container { padding: 32px 24px 64px; }
 }
 </style>
 </head>
@@ -212,89 +194,108 @@ h1,h2,h3 { color: var(--text-heading); }
 
 <div class="layout">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Avatar">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Kelvin Anowu">
+  <h2 class="sidebar-name">Kelvin Anowu</h2>
+  <p class="sidebar-bio muted">
+    Data Scientist focused on analytics, decision-making, and real-world impact.
+  </p>
 
-    <h2 class="sidebar-name">Kelvin Anowu</h2>
-    <p class="sidebar-bio muted">
-      Data Scientist focused on analytics, decision-making, and real-world impact.
-    </p>
-
-    <!-- Desktop Links -->
-    <div class="sidebar-links">
-      <div>📍 Earth</div>
-      <div>✉️ <a href="mailto:you@example.com">Email</a></div>
-      <div>🐙 <a href="https://github.com/ugochukwu11-glitch">GitHub</a></div>
-      <div>🔗 <a href="#">LinkedIn</a></div>
-      <div>𝕏 <a href="#">X</a></div>
+  <div class="sidebar-links">
+    <div>
+      📍 <span>Lagos</span>
     </div>
 
-    <!-- Mobile Follow -->
-    <button class="follow-btn" onclick="toggleFollow()">Follow</button>
-    <div id="followPopup" class="follow-popup">
-      <a href="mailto:you@example.com">✉️ Email</a><br>
-      <a href="https://github.com/ugochukwu11-glitch">🐙 GitHub</a><br>
-      <a href="#">🔗 LinkedIn</a><br>
-      <a href="#">𝕏 X</a>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="container">
-
-    <div class="header">
-      <div class="brand">Kelvin Anowu</div>
-
-      <div class="desktop-nav">
-        <button class="active" onclick="showTab('home')">Home</button>
-        <button onclick="showTab('about')">About</button>
-        <button onclick="showTab('projects')">Projects</button>
-        <button onclick="toggleTheme()">🌙</button>
-      </div>
-
-      <div class="mobile-nav">
-        <button onclick="toggleTheme()">🌙</button>
-        <button onclick="toggleMenu()">☰</button>
-      </div>
+    <div>
+      ✉️ <a href="mailto:anowukelvin45@gmail.com">Email</a>
     </div>
 
-    <section id="home" class="section active">
+    <div>
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.48c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.61.07-.61 1 .07 1.53 1.04 1.53 1.04.9 1.52 2.36 1.08 2.94.83.09-.65.35-1.08.64-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.28.1-2.67 0 0 .84-.27 2.75 1.02A9.5 9.5 0 0112 6.8a9.5 9.5 0 012.5.34c1.9-1.29 2.74-1.02 2.74-1.02.56 1.39.21 2.42.1 2.67.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.57.69.48A10 10 0 0012 2z"/></svg>
+      <a href="https://github.com/ugochukwu11-glitch">GitHub</a>
+    </div>
+
+    <div>
+      🔗 <a href="https://www.linkedin.com/in/kelvin-anowu-27177614b/">LinkedIn</a>
+    </div>
+
+    <div>
+      𝕏 <a href="#">X</a>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="container">
+
+  <div class="header">
+    <div class="brand">Kelvin Anowu</div>
+    <div class="desktop-nav">
+      <button class="active" onclick="showTab('home')">Home</button>
+      <button onclick="showTab('about')">About</button>
+      <button onclick="showTab('projects')">Projects</button>
+      <button onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+
+  <section id="home" class="section active">
+    <div class="hero">
       <h1>Data Scientist</h1>
       <p class="muted">
-        I turn real-world, messy data into insights that drive better decisions
-        with clarity, reasoning, and impact.
+        I turn messy, real-world data into insights that drive confident decisions —
+        with a strong focus on clarity, reasoning, and business impact.
       </p>
-    </section>
+    </div>
 
-    <section id="about" class="section">
-      <div class="card">
-        <h2>About Me</h2>
-        <p>
-          I solve practical problems with data — from exploration and cleaning
-          to interpretable models stakeholders trust.
+    <div class="pillars">
+      <div class="pillar">
+        <h3>Analytics & Insights</h3>
+        <p class="muted">
+          Translating raw data into narratives stakeholders can act on.
         </p>
       </div>
-    </section>
 
-    <section id="projects" class="section">
-      <div class="projects-grid">
-        <div class="card">
-          <h3>Employee Attrition Analysis</h3>
-          <p class="muted">Key drivers of employee turnover in noisy HR data.</p>
-          <p><strong>Tools:</strong> Python, Pandas, SQL</p>
-          <a href="projects/attrition.html">View Project →</a>
-        </div>
+      <div class="pillar">
+        <h3>Modeling with Purpose</h3>
+        <p class="muted">
+          Interpretable models designed for trust, not leaderboard scores.
+        </p>
       </div>
-    </section>
 
-  </main>
-</div>
+      <div class="pillar">
+        <h3>Decision Support</h3>
+        <p class="muted">
+          Data work grounded in real operational and business constraints.
+        </p>
+      </div>
+    </div>
+  </section>
 
-<div id="mobileMenu" class="mobile-menu">
-  <button onclick="navigate('home')">Home</button>
-  <button onclick="navigate('about')">About</button>
-  <button onclick="navigate('projects')">Projects</button>
+  <section id="about" class="section">
+    <div class="card">
+      <h2>About Me</h2>
+      <p>
+        I focus on solving practical problems with data — from exploration and
+        cleaning to building models that inform decisions people trust.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="projects-grid">
+      <div class="card">
+        <h3>Employee Attrition Analysis</h3>
+        <p class="muted">
+          Uncovering drivers of employee turnover from a noisy HR dataset.
+        </p>
+        <p><strong>Tools:</strong> Python, Pandas, SQL</p>
+        <a href="projects/attrition.html">View Project →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
 </div>
 
 <script>
@@ -305,25 +306,10 @@ function showTab(id){
   event.target.classList.add('active');
 }
 
-function navigate(id){
-  showTab(id);
-  toggleMenu();
-}
-
-function toggleMenu(){
-  const menu=document.getElementById('mobileMenu');
-  menu.style.display=menu.style.display==='block'?'none':'block';
-}
-
-function toggleFollow(){
-  const popup=document.getElementById('followPopup');
-  popup.style.display=popup.style.display==='block'?'none':'block';
-}
-
 function toggleTheme(){
   document.body.classList.toggle('dark');
   localStorage.setItem('theme',
-    document.body.classList.contains('dark')?'dark':'light');
+    document.body.classList.contains('dark') ? 'dark' : 'light');
 }
 
 if(localStorage.getItem('theme')==='dark'){
@@ -333,3 +319,4 @@ if(localStorage.getItem('theme')==='dark'){
 
 </body>
 </html>
+
