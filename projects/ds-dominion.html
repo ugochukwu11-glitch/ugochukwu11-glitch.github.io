@@ -425,28 +425,7 @@ ul li::marker {
   margin-bottom: 0;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: white;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
-  transition: all 0.3s;
-  z-index: 100;
-}
 
-.theme-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 32px rgba(79, 70, 229, 0.4);
-}
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
@@ -556,10 +535,7 @@ ul li::marker {
         <span>View on GitHub</span>
         <span>→</span>
       </button>
-      <button class="btn btn-secondary" onclick="window.open('https://github.com/ugochukwu11-glitch/InsightBot', '_blank')">
-        <span>Live Demo</span>
-        <span>↗</span>
-      </button>
+
     </div>
   </div>
 </div>
@@ -877,6 +853,41 @@ ul li::marker {
     </div>
   </section>
 
+<!-- PERSONAL CONTRIBUTION -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">👤</span>
+    <h2>My Contribution</h2>
+  </div>
+  <div class="card">
+    <p>
+      This project was completed collaboratively as part of a team. My primary
+      contributions focused on core data engineering and analysis components
+      of the system.
+    </p>
+
+    <ul>
+      <li>Designing and implementing the web scraping and data extraction logic</li>
+      <li>Cleaning, validating, and normalizing unstructured news data</li>
+      <li>Structuring datasets for downstream analysis and visualization</li>
+      <li>Contributing to the system architecture and analytical reasoning</li>
+    </ul>
+
+    <p>
+      I worked closely with other team members to integrate backend services,
+      ensure data consistency, and align technical decisions with the overall
+      project goals.
+    </p>
+  </div>
+</section>
+
+
+
+
+
+
+  
+
   <!-- REFLECTION -->
   <section class="section">
     <div class="section-header">
@@ -904,15 +915,10 @@ ul li::marker {
 </div>
 
 <!-- Theme Toggle -->
-<button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
 
 <script>
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  const isDark = document.body.classList.contains('dark');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  event.target.textContent = isDark ? '☀️' : '🌙';
-}
+
 
 if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('dark');
