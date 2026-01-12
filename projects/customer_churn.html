@@ -1,1 +1,263 @@
+<!-- ============================= -->
+<!-- CUSTOMER CHURN PROJECT 
+<!-- ============================= -->
+
+<!-- Hero Section -->
+<div class="hero-section">
+  <div class="hero-content">
+    <a href="../index.html" class="back-link">
+      ← Back to Portfolio
+    </a>
+
+    <h1 class="project-title">Customer Churn Prediction</h1>
+    <p class="project-subtitle">
+      An end-to-end machine learning system that predicts customer churn using
+      structured telecom data, combining exploratory analysis, model training,
+      explainability, and an interactive Streamlit dashboard for business decision-making.
+    </p>
+
+    <div class="project-meta">
+      <div class="meta-item">
+        <span class="meta-icon">📅</span>
+        <span>2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-icon">⚡</span>
+        <span>End-to-End Data Science</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-icon">🧠</span>
+        <span>Predictive Analytics</span>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <button class="btn btn-primary" onclick="window.open('https://github.com/YOUR_USERNAME/customer-churn-prediction', '_blank')">
+        <span>View on GitHub</span>
+        <span>→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- Tech Stack -->
+<section class="section" style="margin-top: 40px;">
+  <div class="section-header">
+    <span class="section-icon">🛠️</span>
+    <h2>Tech Stack</h2>
+  </div>
+  <div class="tech-stack">
+    <span class="tech-tag">Python</span>
+    <span class="tech-tag">Pandas</span>
+    <span class="tech-tag">NumPy</span>
+    <span class="tech-tag">Scikit-learn</span>
+    <span class="tech-tag">MySQL</span>
+    <span class="tech-tag">Streamlit</span>
+    <span class="tech-tag">Plotly</span>
+    <span class="tech-tag">Machine Learning</span>
+  </div>
+</section>
+
+<!-- Key Stats -->
+<div class="stats-grid">
+  <div class="stat-box">
+    <div class="stat-number">7K+</div>
+    <div class="stat-label">Customers Analyzed</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number">21+</div>
+    <div class="stat-label">Customer Attributes</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number">84%</div>
+    <div class="stat-label">ROC-AUC Score</div>
+  </div>
+</div>
+
+<!-- Project Overview -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">📋</span>
+    <h2>Project Overview</h2>
+  </div>
+  <div class="card">
+    <p>
+      Customer churn represents one of the most critical challenges faced by
+      subscription-based businesses. This project focuses on building a robust
+      machine learning system capable of predicting churn and identifying
+      high-risk customers before they leave.
+    </p>
+
+    <p>
+      The solution covers the full data science lifecycle—from data ingestion
+      and cleaning, to model training, evaluation, deployment, and visualization.
+      The final output is an interactive dashboard that enables actionable,
+      probability-driven decision-making.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        <strong>Impact:</strong> The system enables proactive retention strategies by
+        transforming historical customer data into predictive insights.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Problem Definition -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <h2>Problem Definition</h2>
+  </div>
+  <div class="card">
+    <div class="challenge-list">
+      <div class="challenge-item">
+        <span class="challenge-icon">⚠️</span>
+        <span>High customer churn leading to revenue loss</span>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-icon">📊</span>
+        <span>Imbalanced churn vs non-churn customer classes</span>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-icon">🧩</span>
+        <span>Mixed numerical and categorical features</span>
+      </div>
+      <div class="challenge-item">
+        <span class="challenge-icon">🔍</span>
+        <span>Need for probability-based, interpretable predictions</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDA -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">🔍</span>
+    <h2>Exploratory Data Analysis</h2>
+  </div>
+  <div class="card">
+    <p>
+      Exploratory Data Analysis was conducted to understand customer behavior
+      patterns and uncover key churn drivers.
+    </p>
+
+    <div class="image-container">
+      <img src="../assets/churn_eda_tenure.png" alt="Tenure vs Churn">
+      <div class="image-caption">Customers with low tenure exhibit significantly higher churn</div>
+    </div>
+
+    <div class="image-container">
+      <img src="../assets/churn_eda_monthly_charges.png" alt="Monthly Charges vs Churn">
+      <div class="image-caption">Higher monthly charges correlate with increased churn risk</div>
+    </div>
+
+    <div class="image-container">
+      <img src="../assets/churn_eda_contract.png" alt="Contract Type vs Churn">
+      <div class="image-caption">Month-to-month contracts show the highest churn rates</div>
+    </div>
+
+    <div class="image-container">
+      <img src="../assets/churn_correlation_heatmap.png" alt="Correlation Heatmap">
+      <div class="image-caption">Correlation between numeric features validates data consistency</div>
+    </div>
+  </div>
+</section>
+
+<!-- Modeling -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <h2>Modeling & Evaluation</h2>
+  </div>
+  <div class="card">
+    <p>
+      Multiple machine learning algorithms were evaluated, including Logistic
+      Regression, Random Forest, and XGBoost. Model performance was assessed
+      using ROC-AUC, precision, recall, and F1-score.
+    </p>
+
+    <p>
+      A tuned Random Forest classifier was selected as the final model due to
+      its strong performance, robustness to non-linear relationships, and
+      interpretability.
+    </p>
+
+    <div class="image-container">
+      <img src="../assets/churn_feature_importance.png" alt="Feature Importance">
+      <div class="image-caption">Top drivers of churn identified by the Random Forest model</div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">📊</span>
+    <h2>Prediction Dashboard</h2>
+  </div>
+  <div class="card">
+    <p>
+      A Streamlit dashboard was developed to operationalize the churn model.
+      The dashboard allows users to explore data, view predictions, and identify
+      high-risk customers in real time.
+    </p>
+
+    <div class="image-container">
+      <img src="../assets/churn_dashboard_overview.png" alt="Churn Dashboard">
+      <div class="image-caption">Interactive Streamlit dashboard for churn analysis</div>
+    </div>
+
+    <div class="image-container">
+      <img src="../assets/churn_predictions_table.png" alt="Predictions Table">
+      <div class="image-caption">High-risk customers ranked by churn probability</div>
+    </div>
+  </div>
+</section>
+
+<!-- Personal Contribution -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">👤</span>
+    <h2>My Contribution</h2>
+  </div>
+  <div class="card">
+    <ul>
+      <li>Data cleaning, preprocessing, and validation</li>
+      <li>Exploratory data analysis and insight generation</li>
+      <li>Model training, tuning, and evaluation</li>
+      <li>Dashboard development and system integration</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Reflection -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">💭</span>
+    <h2>Reflection & Learnings</h2>
+  </div>
+  <div class="card">
+    <p>
+      This project reinforced the importance of building deployable data
+      products rather than isolated models. Emphasis on data quality,
+      interpretability, and business alignment proved essential.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        <strong>Key Takeaway:</strong> Effective data science bridges analytics,
+        engineering, and decision-making to deliver real-world impact.
+      </p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+
 
