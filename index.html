@@ -77,7 +77,15 @@ h1,h2,h3 { color: var(--text-heading); }
   margin: 12px 0 20px;
 }
 
+/* Links */
+.sidebar-links div {
+  margin-bottom: 10px;
+  font-size: .95rem;
+}
+
+/* Follow (mobile only) */
 .follow-btn {
+  display: none;
   padding: 8px 14px;
   border-radius: 8px;
   border: 1px solid var(--border);
@@ -89,11 +97,6 @@ h1,h2,h3 { color: var(--text-heading); }
 .follow-popup {
   display: none;
   margin-top: 10px;
-}
-
-.follow-popup a {
-  display: block;
-  margin-bottom: 8px;
 }
 
 /* Main */
@@ -131,11 +134,8 @@ h1,h2,h3 { color: var(--text-heading); }
   font-weight: 600;
 }
 
-/* Mobile Nav */
-.mobile-nav {
-  display: none;
-  gap: 16px;
-}
+/* Mobile */
+.mobile-nav { display: none; gap: 16px; }
 
 .mobile-menu {
   display: none;
@@ -193,7 +193,13 @@ h1,h2,h3 { color: var(--text-heading); }
     border-bottom: 1px solid var(--border);
     text-align: center;
   }
-  .sidebar-avatar { margin: 0 auto 16px; width:140px; height:140px; }
+  .sidebar-avatar {
+    margin: 0 auto 16px;
+    width:140px;
+    height:140px;
+  }
+  .sidebar-links { display: none; }   /* hide links */
+  .follow-btn { display: inline-block; }
   .brand { display: none; }
   .desktop-nav { display: none; }
   .mobile-nav { display: flex; }
@@ -209,16 +215,28 @@ h1,h2,h3 { color: var(--text-heading); }
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Avatar">
+
     <h2 class="sidebar-name">Kelvin Anowu</h2>
     <p class="sidebar-bio muted">
       Data Scientist focused on analytics, decision-making, and real-world impact.
     </p>
 
+    <!-- Desktop Links -->
+    <div class="sidebar-links">
+      <div>📍 Earth</div>
+      <div>✉️ <a href="mailto:you@example.com">Email</a></div>
+      <div>🐙 <a href="https://github.com/ugochukwu11-glitch">GitHub</a></div>
+      <div>🔗 <a href="#">LinkedIn</a></div>
+      <div>𝕏 <a href="#">X</a></div>
+    </div>
+
+    <!-- Mobile Follow -->
     <button class="follow-btn" onclick="toggleFollow()">Follow</button>
     <div id="followPopup" class="follow-popup">
-      <a href="mailto:you@example.com">✉️ Email</a>
-      <a href="https://github.com/ugochukwu11-glitch">🐙 GitHub</a>
-      <a href="#">🔗 LinkedIn</a>
+      <a href="mailto:you@example.com">✉️ Email</a><br>
+      <a href="https://github.com/ugochukwu11-glitch">🐙 GitHub</a><br>
+      <a href="#">🔗 LinkedIn</a><br>
+      <a href="#">𝕏 X</a>
     </div>
   </aside>
 
@@ -253,8 +271,8 @@ h1,h2,h3 { color: var(--text-heading); }
       <div class="card">
         <h2>About Me</h2>
         <p>
-          I focus on solving real business problems with data — from exploration
-          and cleaning to interpretable models stakeholders trust.
+          I solve practical problems with data — from exploration and cleaning
+          to interpretable models stakeholders trust.
         </p>
       </div>
     </section>
