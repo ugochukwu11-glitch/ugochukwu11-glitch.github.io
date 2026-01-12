@@ -85,94 +85,135 @@ p {
 
   <h1>InsightBot</h1>
   <p class="muted">
-    A multilingual, data science–driven news aggregation and insight platform
-    designed to extract, structure, and visualize global news trends at scale.
+    A full-stack, data science–driven news aggregation and insight platform
+    that extracts, structures, and visualizes global news trends across
+    multiple sources and regions.
   </p>
+
+  <!-- OVERVIEW -->
+  <section class="section">
+    <h2>Project Overview</h2>
+    <div class="card">
+      <p>
+        InsightBot was developed as part of the <strong>TechWiz 6 – Data Science Dominion</strong>
+        competition. The goal was to design an intelligent system capable of
+        automatically extracting unstructured news data from the web and
+        transforming it into structured, analyzable insights.
+      </p>
+
+      <p>
+        The project integrates web scraping, data validation, database storage,
+        API exposure, user authentication, and interactive visualization into
+        a single, end-to-end data product.
+      </p>
+    </div>
+  </section>
+
+  <!-- UI WALKTHROUGH -->
+  <section class="section">
+    <h2>User Interface Walkthrough</h2>
+    <div class="card">
+
+      <h3>InsightBot Homepage</h3>
+      <p>
+        The homepage serves as the primary entry point for users. It displays
+        the latest extracted news articles in a card-based layout, allowing
+        users to quickly scan headlines, preview article content, and navigate
+        to detailed views.
+      </p>
+
+      <img src="assets/homepage.png" alt="InsightBot Homepage" style="width:100%; border-radius:12px; margin:16px 0;">
+
+      <h3>User Authentication (Login & Registration)</h3>
+      <p>
+        InsightBot implements a secure authentication system that allows users
+        to register and log in before accessing the platform. This ensures
+        controlled access to content and administrative features.
+      </p>
+
+      <img src="assets/login.png" alt="Login Page" style="width:100%; border-radius:12px; margin:16px 0;">
+      <img src="assets/register.png" alt="Register Page" style="width:100%; border-radius:12px; margin:16px 0;">
+
+      <p>
+        Administrative users are granted additional privileges, such as
+        approving new user accounts and managing access.
+      </p>
+
+      <h3>Article Page</h3>
+      <p>
+        Individual news articles are displayed in a focused reading view.
+        The article page shows the extracted headline, source, standardized
+        publication date, and structured article paragraphs derived from the
+        original webpage.
+      </p>
+
+      <img src="assets/articlepage.png" alt="Article Page" style="width:100%; border-radius:12px; margin:16px 0;">
+    </div>
+  </section>
 
   <!-- PROBLEM -->
   <section class="section">
     <h2>Problem Definition</h2>
     <div class="card">
       <p>
-        The modern information landscape is saturated with news content published
-        continuously across hundreds of platforms, regions, and languages.
-        While access to information has increased, the ability to extract
-        meaningful insights from this volume of data has significantly declined.
+        The modern news ecosystem produces an overwhelming volume of information
+        across countless platforms and languages. While information availability
+        is high, extracting meaningful insights from this data remains difficult.
       </p>
 
       <p>
-        Readers, analysts, and decision-makers face three core challenges:
+        Key challenges include:
       </p>
 
       <ul>
-        <li>Information overload from unstructured news sources</li>
-        <li>Inconsistent formats, languages, and publishing styles</li>
-        <li>Lack of high-level insight into emerging trends and topics</li>
+        <li>Unstructured and inconsistent news formats</li>
+        <li>Information overload for end users</li>
+        <li>Lack of aggregated trend-level insights</li>
+        <li>Difficulty comparing content across multiple sources</li>
       </ul>
 
       <p>
-        The problem InsightBot addresses is not simply data collection, but
-        <strong>transforming raw, unstructured web news into structured,
-        analyzable, and visual insights</strong> that support faster
-        understanding and decision-making.
+        InsightBot addresses these challenges by automating content extraction
+        and transforming raw news data into structured, analyzable datasets.
       </p>
     </div>
   </section>
 
-  <!-- DESIGN -->
+  <!-- DATA SOURCES -->
   <section class="section">
-    <h2>Design Specifications</h2>
+    <h2>Data Sources</h2>
     <div class="card">
       <p>
-        InsightBot was designed with the following system requirements in mind:
+        InsightBot extracts live news data from a diverse set of international
+        and regional news websites. The dataset used in this project includes
+        articles sourced from:
       </p>
 
       <ul>
-        <li>Automated extraction of news headlines and article bodies</li>
-        <li>Support for multiple languages and regions</li>
-        <li>Pattern-based generalization rather than site-by-site hardcoding</li>
-        <li>Structured storage suitable for analytics and visualization</li>
-        <li>Clear separation between data extraction, storage, and presentation</li>
+        <li>CNN</li>
+        <li>BBC</li>
+        <li>The New York Times</li>
+        <li>The Guardian</li>
+        <li>Reuters</li>
+        <li>The Washington Post</li>
+        <li>Forbes</li>
+        <li>TechCrunch</li>
+        <li>Wired</li>
+        <li>NPR</li>
+        <li>Bloomberg</li>
+        <li>The Financial Times</li>
+        <li>Al Jazeera</li>
+        <li>Engadget</li>
+        <li>The Verge</li>
+        <li>RT</li>
+        <li>TASS</li>
+        <li>Meduza</li>
+        <li>Other regional and international news platforms</li>
       </ul>
 
       <p>
-        To meet these goals, the system avoids heavy browser automation and instead
-        relies on intelligent HTML parsing, heuristic link validation, and
-        scalable rule-based extraction strategies.
-      </p>
-    </div>
-  </section>
-
-  <!-- DATA -->
-  <section class="section">
-    <h2>Data Sources & Test Data</h2>
-    <div class="card">
-      <p>
-        The project uses real-world news websites as its primary data source.
-        Two datasets were created in alignment with the SRS:
-      </p>
-
-      <ul>
-        <li><strong>Training Set:</strong> 40 known news websites used to refine scraping heuristics</li>
-        <li><strong>Testing Set:</strong> 10 unseen websites used to evaluate generalization</li>
-      </ul>
-
-      <p>
-        Extracted fields include:
-      </p>
-
-      <ul>
-        <li>Article URL</li>
-        <li>Headline (title)</li>
-        <li>Full article body</li>
-        <li>Publication date</li>
-        <li>Article length</li>
-        <li>Source domain</li>
-      </ul>
-
-      <p>
-        This approach ensured the system was evaluated under realistic,
-        unpredictable web conditions.
+        Each article record includes the URL, headline, full article body,
+        publication date, article length, source domain, and language metadata.
       </p>
     </div>
   </section>
@@ -182,45 +223,41 @@ p {
     <h2>System Architecture</h2>
     <div class="card">
       <p>
-        InsightBot follows a modular pipeline architecture:
+        InsightBot follows a modular pipeline-based architecture:
       </p>
 
       <ul>
-        <li><strong>Web Scraper:</strong> Extracts links and article content using heuristics</li>
-        <li><strong>Validation Layer:</strong> Filters non-article pages and low-quality content</li>
+        <li><strong>Scraping Layer:</strong> Extracts article links and content using heuristics</li>
+        <li><strong>Validation Layer:</strong> Filters non-article and low-quality pages</li>
         <li><strong>Storage Layer:</strong> Structured persistence in MySQL and CSV</li>
-        <li><strong>API Layer:</strong> Flask endpoints for Tableau and frontend consumption</li>
-        <li><strong>Visualization Layer:</strong> Tableau dashboards for aggregated insights</li>
+        <li><strong>API Layer:</strong> Flask endpoints for frontend and analytics</li>
+        <li><strong>Visualization Layer:</strong> Tableau dashboards for insight exploration</li>
       </ul>
-
-      <p>
-        Each layer operates independently, improving maintainability and making
-        the system easier to extend or debug.
-      </p>
     </div>
   </section>
 
-  <!-- ANALYTICS -->
+  <!-- VISUALIZATION -->
   <section class="section">
-    <h2>Analytics & Visualization</h2>
+    <h2>Data Visualization & Insights</h2>
     <div class="card">
       <p>
-        Tableau was used to convert structured news data into meaningful insights.
-        Key analyses include:
+        InsightBot integrates Tableau for interactive analytics and trend
+        visualization. The dashboard allows users to explore aggregated news
+        insights derived from the extracted dataset.
+      </p>
+
+      <img src="assets/dashboard.png" alt="Tableau Dashboard" style="width:100%; border-radius:12px; margin:16px 0;">
+
+      <p>
+        Key insights include:
       </p>
 
       <ul>
-        <li>Daily and monthly news volume trends</li>
-        <li>Top publishing sources by article count</li>
-        <li>Most frequent keywords appearing in headlines</li>
-        <li>Article length distribution across sources</li>
+        <li>News publication volume over time</li>
+        <li>Top news sources by article count</li>
+        <li>Most frequent keywords in article titles</li>
+        <li>Distribution of article lengths across sources</li>
       </ul>
-
-      <p>
-        These visualizations allow users to identify content patterns, dominant
-        topics, and emerging trends at a glance — directly aligning with the
-        SRS requirement for aggregated news insights.
-      </p>
     </div>
   </section>
 
@@ -228,74 +265,42 @@ p {
   <section class="section">
     <h2>Challenges & Limitations</h2>
     <div class="card">
-      <p>
-        Several real-world challenges were encountered during development:
-      </p>
-
       <ul>
         <li>Inconsistent HTML structures across news websites</li>
-        <li>Mixed date formats requiring normalization</li>
-        <li>Dynamic and JavaScript-heavy pages limiting extraction</li>
-        <li>Language detection inconsistencies in visualization tools</li>
+        <li>Mixed and non-standard publication date formats</li>
+        <li>Dynamic and JavaScript-heavy pages</li>
+        <li>Language handling limitations in visualization tools</li>
       </ul>
 
       <p>
-        These challenges highlighted the complexity of working with uncontrolled
-        web data and reinforced the need for robust validation and fallback logic.
-      </p>
-    </div>
-  </section>
-
-  <!-- INSTALL -->
-  <section class="section">
-    <h2>Installation & Execution</h2>
-    <div class="card">
-      <p>
-        To run the project locally:
-      </p>
-
-      <ul>
-        <li>Install Python 3.10+</li>
-        <li>Install dependencies from <code>requirements.txt</code></li>
-        <li>Configure MySQL database and credentials</li>
-        <li>Run the scraper in training or testing mode</li>
-        <li>Launch the Flask application</li>
-        <li>Connect Tableau via the Flask API</li>
-      </ul>
-
-      <p>
-        The modular design allows individual components to be tested independently.
+        These challenges reflect real-world data engineering constraints and
+        were mitigated through validation logic, fallback heuristics, and
+        structured data normalization.
       </p>
     </div>
   </section>
 
   <!-- REFLECTION -->
   <section class="section">
-    <h2>Reflection & Learnings</h2>
+    <h2>Reflection</h2>
     <div class="card">
       <p>
         InsightBot demonstrates how data science extends beyond modeling into
-        systems thinking, data engineering, and interpretability.
+        system design, data engineering, and interpretability. The project
+        highlights the importance of building robust pipelines capable of
+        handling imperfect, real-world data.
       </p>
 
       <p>
-        The project reinforced the importance of:
-      </p>
-
-      <ul>
-        <li>Asking the right questions before writing code</li>
-        <li>Designing for imperfect, real-world data</li>
-        <li>Balancing automation with explainability</li>
-      </ul>
-
-      <p>
-        Ultimately, InsightBot is a practical example of how data science can
-        transform unstructured information into actionable insight.
+        This experience reinforced the value of asking the right questions,
+        designing scalable systems, and delivering insights rather than
+        raw data.
       </p>
     </div>
   </section>
 
 </div>
+
 
 <script>
 if (localStorage.getItem('theme') === 'dark') {
