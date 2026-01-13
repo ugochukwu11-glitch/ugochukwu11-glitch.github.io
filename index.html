@@ -1129,91 +1129,76 @@ p { line-height: 1.6; }
     </div>
 
     <!-- Featured Projects Preview -->
-    <div class="featured-section">
-      <div class="section-header">
-        <h2 class="section-title">Featured Projects</h2>
-        <button class="btn-link" onclick="showTab('projects'); document.querySelectorAll('.desktop-nav button')[2].classList.add('active');">
-          View All →
-        </button>
-      </div>
-
-
-      <a href="projects/ds-dominion.html" style="text-decoration:none;">
-  <div class="featured-card">
-    <div class="featured-tag">Global Competition</div>
-    <h3>InsightBot (DS Dominion)</h3>
-    <p class="muted">
-      A data science–driven news aggregation and insight platform that extracts,
-      structures, and visualizes global news trends across multiple sources.
-    </p>
-    <div class="featured-tech">
-      <span>Python</span>
-      <span>SQL</span>
-      <span>Flask</span>
-      <span>MySQL</span>
-      <span>Tableau</span>
-    </div>
-    <p class="muted" style="margin-top:12px;">
-      <em>4th place globally · Jury Mention by Aptech</em>
-    </p>
-    <span class="featured-link">View Project →</span>
+   <div class="featured-section">
+  <div class="section-header">
+    <h2 class="section-title">Featured Projects</h2>
+    <button class="btn-link" onclick="showTab('projects')">
+      View All →
+    </button>
   </div>
-</a>
 
+  <div class="featured-grid">
 
-      <a href="projects/customer_churn.html" style="text-decoration:none;">
-  <div class="featured-card">
-
-    <div class="featured-tag">
-       End-to-End ML System
-    </div>
-
-    <h3>Customer Churn Prediction</h3>
-
-    <p class="muted" >
-      An end-to-end machine learning system that predicts customer churn using
-      structured telecom data, interpretable models, and an interactive
-      Streamlit dashboard for retention decision-making.
-    </p>
-
-    <div class="featured-tech">
-      <span>Python</span>
-      <span>Pandas</span>
-      <span>Scikit-learn</span>
-      <span>Streamlit</span>
-      <span>SQL</span>
-    </div>
-
-    <p class="muted achievement">
-      Predictive analytics · Business-focused ML
-    </p>
-
-     <span class="featured-link">View Project →</span>
-    </div>
-
-  </div>
-</a>
-
-
-
-      
-      
-      <div class="featured-grid">
-        <div class="featured-card">
-          <div class="featured-tag">Machine Learning</div>
-          <h3>Employee Attrition Analysis</h3>
-          <p class="muted">
-            Uncovering drivers of employee turnover from a noisy HR dataset using predictive modeling.
-          </p>
-          <div class="featured-tech">
-            <span>Python</span>
-            <span>Pandas</span>
-            <span>SQL</span>
-          </div>
-          <a href="projects/attrition.html" class="featured-link">View Project →</a>
+    <!-- InsightBot -->
+    <a href="projects/ds-dominion.html" class="project-card-link">
+      <div class="featured-card">
+        <div class="featured-tag">Global Competition</div>
+        <h3>InsightBot (DS Dominion)</h3>
+        <p class="muted">
+          A data science–driven news aggregation and insight platform that extracts,
+          structures, and visualizes global news trends across multiple sources.
+        </p>
+        <div class="featured-tech">
+          <span>Python</span>
+          <span>SQL</span>
+          <span>Flask</span>
+          <span>MySQL</span>
+          <span>Tableau</span>
         </div>
+        <p class="muted"><em>4th place globally · Jury Mention by Aptech</em></p>
+        <span class="featured-link">View Project →</span>
       </div>
-    </div>
+    </a>
+
+    <!-- Churn -->
+    <a href="projects/customer_churn.html" class="project-card-link">
+      <div class="featured-card">
+        <div class="featured-tag">End-to-End ML System</div>
+        <h3>Customer Churn Prediction</h3>
+        <p class="muted">
+          An end-to-end machine learning system that predicts customer churn using
+          structured telecom data and explainable models.
+        </p>
+        <div class="featured-tech">
+          <span>Python</span>
+          <span>Pandas</span>
+          <span>Scikit-learn</span>
+          <span>Streamlit</span>
+          <span>SQL</span>
+        </div>
+        <span class="featured-link">View Project →</span>
+      </div>
+    </a>
+
+    <!-- Attrition -->
+    <a href="projects/attrition.html" class="project-card-link">
+      <div class="featured-card">
+        <div class="featured-tag">Machine Learning</div>
+        <h3>Employee Attrition Analysis</h3>
+        <p class="muted">
+          Predicting and explaining employee turnover from HR data.
+        </p>
+        <div class="featured-tech">
+          <span>Python</span>
+          <span>Pandas</span>
+          <span>SQL</span>
+        </div>
+        <span class="featured-link">View Project →</span>
+      </div>
+    </a>
+
+  </div>
+</div>
 
   </section>
 
@@ -1297,10 +1282,6 @@ p { line-height: 1.6; }
     </div>
   </div>
 </a>
-
-
-
-      
 
     </div>
     
