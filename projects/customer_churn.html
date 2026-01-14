@@ -884,3 +884,118 @@ ul li::marker {
 
     <div class="image-container">
       <img src="../assets/churn_correlation_heatmap
+
+          <div class="image-caption">Correlation between numeric features validates data consistency</div>
+    </div>
+  </div>
+</section>
+
+<!-- Modeling -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <h2>Modeling & Evaluation</h2>
+  </div>
+  <div class="card">
+    <p>
+      Multiple machine learning algorithms were evaluated, including Logistic
+      Regression, Random Forest, and XGBoost. Model performance was assessed
+      using ROC-AUC, precision, recall, and F1-score.
+    </p>
+
+    <p>
+      A tuned Random Forest classifier was selected as the final model due to
+      its strong performance, robustness to non-linear relationships, and
+      interpretability.
+    </p>
+
+    <div class="image-container">
+      <img src="../assets/churn_feature_importance.png" alt="Feature Importance">
+      <div class="image-caption">Top drivers of churn identified by the Random Forest model</div>
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">📊</span>
+    <h2>Prediction Dashboard</h2>
+  </div>
+  <div class="card">
+    <p>
+      A Streamlit dashboard was developed to operationalize the churn model.
+      The dashboard allows users to explore data, view predictions, and identify
+      high-risk customers in real time.
+    </p>
+
+    <div class="image-container">
+      <img src="../assets/churn_dashboard_overview.png" alt="Churn Dashboard">
+      <div class="image-caption">Interactive Streamlit dashboard for churn analysis</div>
+    </div>
+
+    <div class="image-container">
+      <img src="../assets/churn_predictions_table.png" alt="Predictions Table">
+      <div class="image-caption">High-risk customers ranked by churn probability</div>
+    </div>
+  </div>
+</section>
+
+<!-- Personal Contribution -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">👤</span>
+    <h2>My Contribution</h2>
+  </div>
+  <div class="card">
+    <ul>
+
+      <li>Exploratory data analysis and insight generation</li>
+      <li>Model training, tuning, and evaluation</li>
+      <li>Dashboard development and system integration</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Reflection -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">💭</span>
+    <h2>Reflection & Learnings</h2>
+  </div>
+  <div class="card">
+    <p>
+      This project reinforced the importance of building deployable data
+      products rather than isolated models. Emphasis on data quality,
+      interpretability, and business alignment proved essential.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        <strong>Key Takeaway:</strong> Effective data science bridges analytics,
+        engineering, and decision-making to deliver real-world impact.
+      </p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+
+
+
+<!-- Theme Toggle -->
+
+
+<script>
+
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  document.querySelector('.theme-toggle').textContent = '☀️';
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click
+
