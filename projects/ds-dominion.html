@@ -621,6 +621,108 @@ ul li::marker {
   </div>
 </section>
 
+  <!-- Full Thought Process -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-icon">📘</span>
+    <h2>Full Project Thought Process</h2>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary style="cursor:pointer; font-weight:600; margin-bottom:16px;">
+        Click to expand full reasoning and design decisions
+      </summary>
+
+      <h3>1. Initial Problem Framing</h3>
+      <p>
+        At the start of the project, we deliberately avoided jumping straight into tools or code.
+        Instead, we focused on understanding the real problem the SRS was pointing toward.
+      </p>
+
+      <p>
+        The real problem was not building a scraper or a dashboard, but transforming unstructured,
+        noisy, multilingual news data into structured insights that help users understand trends
+        rather than individual articles.
+      </p>
+
+      <h3>2. Translating the SRS Into Technical Requirements</h3>
+      <p>
+        The SRS emphasized aggregated news trends, topic frequency, automated extraction,
+        and visualization for insight rather than browsing.
+      </p>
+
+      <p>
+        From this, we derived implicit technical requirements such as cross-site generalization,
+        article validation, date normalization, Tableau-compatible structuring, and explainability
+        during defense.
+      </p>
+
+      <h3>3. Scraping Strategy: Why We Avoided Heavy Automation</h3>
+      <p>
+        Browser automation was intentionally avoided due to fragility, performance overhead,
+        and lack of explainability. Instead, a pattern-based HTML parsing approach was used.
+      </p>
+
+      <h3>4. Defining What Counts as an Article</h3>
+      <p>
+        Article validation required multi-layer heuristics including URL patterns, content length,
+        paragraph counts, and container scoring.
+      </p>
+
+      <p>
+        A key decision was accepting false negatives over false positives to preserve analytical
+        integrity.
+      </p>
+
+      <h3>5. Content Extraction Philosophy</h3>
+      <p>
+        Only information essential for trend analysis was extracted: headline, body text,
+        source, and publication date.
+      </p>
+
+      <h3>6. Language Handling</h3>
+      <p>
+        Language detection was included at the data level for extensibility, even when
+        visualization constraints limited its immediate use.
+      </p>
+
+      <h3>7. Storage Design</h3>
+      <p>
+        CSV was used for transparency and inspection, while MySQL supported querying,
+        API access, and Tableau integration.
+      </p>
+
+      <h3>8. Flask Application Design</h3>
+      <p>
+        A Flask application was introduced to demonstrate system usability, support
+        authentication, and separate exploration from analytics.
+      </p>
+
+      <h3>9. Visualization Strategy</h3>
+      <p>
+        Tableau was treated as a lens for insight. The dashboard focused on frequency,
+        trends, and clarity rather than visual density.
+      </p>
+
+      <h3>10. Challenges and Trade-Offs</h3>
+      <p>
+        Limitations such as date inconsistencies, blocked sites, and Tableau constraints
+        were documented transparently and mitigated where possible.
+      </p>
+
+      <h3>11. Final Reflection</h3>
+      <p>
+        InsightBot demonstrates systems thinking, data engineering under uncertainty,
+        and decision-driven data science. The core lesson was that strong data products
+        are built through structure, trade-offs, and clarity — not complexity.
+      </p>
+
+    </details>
+  </div>
+</section>
+
+
 
 
 
