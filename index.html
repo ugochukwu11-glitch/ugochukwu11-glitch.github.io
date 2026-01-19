@@ -768,6 +768,69 @@ p { line-height: 1.6; }
   .projects-grid {
     grid-template-columns: 1fr;
   }
+
+
+/* MOBILE NAVIGATION */
+.mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.mobile-brand a {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.hamburger {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-main);
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.mobile-menu button {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 12px 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Mobile-only behavior */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-header {
+    display: flex;
+  }
+}
+
+
+
+
+
+
   
   /* Optimize animations for mobile */
   .pillar:hover,
@@ -1352,6 +1415,21 @@ const statsSection = document.querySelector('.stats-section');
 if (statsSection) {
   statsObserver.observe(statsSection);
 }
+
+
+
+  function toggleMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+function handleMobileNav(sectionId) {
+  toggleMobileMenu();
+  showTab(sectionId);
+}
+
+
+  
 </script>
 
 </body>
