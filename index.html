@@ -861,7 +861,8 @@ p { line-height: 1.6; }
   position: fixed;
   top: 0;
   right: 0;
-  width: 100%;
+  width: 85%;
+  max-width: 380px;
   height: 100vh;
   background: var(--bg);
   transform: translateX(100%);
@@ -922,6 +923,18 @@ p { line-height: 1.6; }
   color: var(--text-main);
   cursor: pointer;
   line-height: 1;
+}
+
+
+  .drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1500;
+  display: none;
+}
+.drawer-backdrop.active {
+  display: block;
 }
 
 
@@ -1144,6 +1157,8 @@ p { line-height: 1.6; }
 </head>
 
 <body>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
 
 <!-- Mobile Drawer -->
 <div class="mobile-drawer" id="mobileDrawer">
@@ -1577,7 +1592,11 @@ function handleMobileNav(sectionId) {
 }
   
 function toggleDrawer() {
-  document.getElementById('mobileDrawer').classList.toggle('open');
+  + const drawer = document.getElementById('mobileDrawer');
++ const backdrop = document.getElementById('drawerBackdrop');
++
++ drawer.classList.toggle('open');
++ backdrop.classList.toggle('active');
 }
 
   
