@@ -959,8 +959,11 @@ p { line-height: 1.6; }
 .mobile-sidebar {
   padding: 32px 24px;
   text-align: center;
-  align-items:  center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers avatar, name, bio, links block */
 }
+
 
 .drawer-theme-toggle {
   margin-top: 24px;
@@ -1025,17 +1028,20 @@ p { line-height: 1.6; }
 
   /* Mobile sidebar links alignment */
   .sidebar-links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;   /* left align container */
-    gap: 16px;                 /* space between rows */
-  }
+  width: 100%;
+  max-width: 260px;       /* keeps it visually compact */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* rows stay left-aligned */
+  margin-top: 24px;
+}
+
 
   .sidebar-links > div {
     display: flex;
     align-items: center;       /* vertically center icon + text */
     gap: 12px;                 /* space between icon and text */
-    width: 100%;
+
   }
 
   .sidebar-links svg {
