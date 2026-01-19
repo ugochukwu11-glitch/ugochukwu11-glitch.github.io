@@ -800,6 +800,15 @@ p { line-height: 1.6; }
   cursor: pointer;
   line-height: 1;
 }
+.theme-toggle-btn {
+  font-size: 1.8rem;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  line-height: 1;
+}
 
 
 .mobile-menu {
@@ -1153,9 +1162,6 @@ p { line-height: 1.6; }
       <div>🔗 <a href="https://www.linkedin.com/in/kelvin-anowu-27177614b/">LinkedIn</a></div>
       <div>𝕏 <a href="#">X</a></div>
     </div>
-
-    <button class="drawer-theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-
     <nav class="mobile-nav">
   <button onclick="navigateMobile('home')">Home</button>
   <button onclick="navigateMobile('about')">About</button>
@@ -1215,9 +1221,12 @@ p { line-height: 1.6; }
     <a href="index.html">Kelvin Anowu</a>
   </div>
 
-  <button class="hamburger" onclick="toggleDrawer()">☰</button>
-
+  <div style="display:flex; align-items:center; gap:12px;">
+    <button class="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+    <button class="hamburger" onclick="toggleDrawer()">☰</button>
+  </div>
 </div>
+
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
