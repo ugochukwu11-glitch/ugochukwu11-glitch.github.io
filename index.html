@@ -1599,7 +1599,13 @@ function handleMobileNav(sectionId) {
 }
   
 function toggleDrawer() {
-  document.getElementById('mobileDrawer').classList.toggle('open');
+  
+  const drawer = document.getElementById('mobileDrawer');
+  const backdrop = document.getElementById('drawerBackdrop');
+
+  drawer.classList.toggle('open');
+  backdrop.classList.toggle('active');
+  
 }
 
   
