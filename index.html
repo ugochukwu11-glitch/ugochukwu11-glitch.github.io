@@ -792,12 +792,15 @@ p { line-height: 1.6; }
 }
 
 .hamburger {
-  font-size: 2.2rem;
+  font-size: 2.2rem;            /* increase icon size */
+  padding: 12px 14px;         /* larger tap target */
   background: none;
   border: none;
-  cursor: pointer;
   color: var(--text-main);
+  cursor: pointer;
+  line-height: 1;
 }
+
 
 .mobile-menu {
   display: none;
@@ -902,10 +905,13 @@ p { line-height: 1.6; }
   position: absolute;
   top: 16px;
   right: 16px;
+  font-size: 2.2rem;            /* bigger X */
+  padding: 12px 14px;         /* good tap area */
   background: none;
   border: none;
-  font-size: 1.4rem;
   color: var(--text-main);
+  cursor: pointer;
+  line-height: 1;
 }
 
 
