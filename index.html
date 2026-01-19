@@ -1021,6 +1021,39 @@ p { line-height: 1.6; }
 
 
 
+  /* Mobile sidebar links alignment */
+@media (max-width: 768px) {
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;   /* left align container */
+    gap: 16px;                 /* space between rows */
+  }
+
+  .sidebar-links > div {
+    display: flex;
+    align-items: center;       /* vertically center icon + text */
+    gap: 12px;                 /* space between icon and text */
+    width: 100%;
+  }
+
+  .sidebar-links svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;            /* icon never shrinks */
+  }
+
+  .sidebar-links span,
+  .sidebar-links a {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+}
+
+
+
 
 
 
