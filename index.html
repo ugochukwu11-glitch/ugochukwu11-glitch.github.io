@@ -7,6 +7,7 @@
 <title>Kelvin Anowu | Data Scientist</title>
 
 <style>
+/* ================= ROOT ================= */
 :root {
   --primary: #4f46e5;
   --primary-dark: #4338ca;
@@ -40,20 +41,18 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-a:hover { text-decoration: underline; }
-
 h1,h2,h3 { color: var(--text-heading); margin-top: 0; }
 p { line-height: 1.6; }
-
 .muted { color: var(--text-muted); }
 
+/* ================= LAYOUT ================= */
 .layout {
   display: grid;
   grid-template-columns: 300px 1fr;
   min-height: 100vh;
 }
 
-/* SIDEBAR */
+/* ================= DESKTOP SIDEBAR ================= */
 .sidebar {
   padding: 40px 28px;
   background: var(--card);
@@ -69,37 +68,22 @@ p { line-height: 1.6; }
   margin-bottom: 20px;
 }
 
-.sidebar-name {
-  font-size: 1.4rem;
-  margin-bottom: 6px;
-}
-
-.sidebar-bio {
-  font-size: .95rem;
-  margin-bottom: 28px;
-}
+.sidebar-name { font-size: 1.4rem; margin-bottom: 6px; }
+.sidebar-bio { font-size: .95rem; margin-bottom: 28px; }
 
 .sidebar-links div {
   display: flex;
-  align-items: center;
   gap: 10px;
-  font-size: .95rem;
   margin-bottom: 14px;
-  color: var(--text-main);
 }
 
-.sidebar-links svg {
-  width: 18px;
-  height: 18px;
-  stroke: var(--text-muted);
-}
-
-/* MAIN */
+/* ================= MAIN ================= */
 .container {
   padding: 40px 56px 80px;
   max-width: 960px;
 }
 
+/* ================= DESKTOP HEADER ================= */
 .header {
   display: flex;
   justify-content: space-between;
@@ -112,18 +96,13 @@ p { line-height: 1.6; }
   font-weight: 700;
   color: var(--primary);
 }
-.brand a{
-  text-decoration: none;
-}
 
-
-  
 .desktop-nav button {
   background: none;
   border: none;
-  cursor: pointer;
   margin-left: 20px;
   font-size: 1rem;
+  cursor: pointer;
   color: var(--text-muted);
 }
 
@@ -132,383 +111,45 @@ p { line-height: 1.6; }
   font-weight: 600;
 }
 
+/* ================= SECTIONS ================= */
 .section { display: none; }
 .section.active { display: block; }
 
-/* HOMEPAGE CONTENT */
-.hero {
-  margin-bottom: 60px;
-}
-
+/* ================= HERO ================= */
 .hero-title {
   font-size: 3rem;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  background: linear-gradient(135deg,var(--primary),var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: fadeInUp 0.8s ease-out;
 }
 
-.hero-subtitle {
-  font-size: 1.2rem;
-  max-width: 620px;
-  margin-bottom: 30px;
-  animation: fadeInUp 0.8s ease-out 0.2s backwards;
-}
+.hero-subtitle { max-width: 620px; }
 
 .cta-buttons {
   display: flex;
   gap: 16px;
   margin-top: 30px;
-  flex-wrap: wrap;
-  animation: fadeInUp 0.8s ease-out 0.4s backwards;
 }
 
-.btn-primary, .btn-secondary {
-  padding: 12px 28px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-}
-
+/* ================= BUTTONS ================= */
 .btn-primary {
   background: var(--primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: var(--primary-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
 }
 
 .btn-secondary {
+  border: 2px solid var(--primary);
   background: transparent;
   color: var(--primary);
-  border: 2px solid var(--primary);
+  padding: 12px 28px;
+  border-radius: 8px;
 }
 
-.btn-secondary:hover {
-  background: var(--primary);
-  color: white;
-  transform: translateY(-2px);
-}
-
-.btn-link {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.2s;
-}
-
-.btn-link:hover {
-  transform: translateX(4px);
-}
-
-/* Stats Section */
-.stats-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 24px;
-  margin: 50px 0;
-  animation: fadeInUp 0.8s ease-out 0.6s backwards;
-}
-
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.15);
-  border-color: var(--primary);
-}
-
-.stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 8px;
-}
-
-.stat-label {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-/* Skills Section */
-.skills-section {
-  margin: 60px 0;
-}
-
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 30px;
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 24px;
-}
-
-.skill-category {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px;
-  transition: all 0.3s ease;
-  opacity: 0;
-}
-
-.skill-category:hover {
-  border-color: var(--primary);
-  transform: translateY(-4px);
-}
-
-.skill-category.fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.skill-category:nth-child(1) { animation-delay: 0s; }
-.skill-category:nth-child(2) { animation-delay: 0.1s; }
-.skill-category:nth-child(3) { animation-delay: 0.2s; }
-.skill-category:nth-child(4) { animation-delay: 0.3s; }
-
-.skill-category h3 {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-  color: var(--text-heading);
-}
-
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.skill-tag {
-  background: var(--primary);
-  color: white;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.skill-tag:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-}
-
-/* Pillars Section */
-.pillars-section {
-  margin: 60px 0;
-}
-
-.pillars {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-  gap: 24px;
-  margin-top: 40px;
-}
-
-.pillar {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 28px 22px;
-  background: var(--card);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.pillar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-}
-
-.pillar:hover::before {
-  transform: scaleX(1);
-}
-
-.pillar:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 40px rgba(79, 70, 229, 0.2);
-  border-color: var(--primary);
-}
-
-.pillar.fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.pillar:nth-child(1) { animation-delay: 0s; }
-.pillar:nth-child(2) { animation-delay: 0.15s; }
-.pillar:nth-child(3) { animation-delay: 0.3s; }
-
-.pillar-icon {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
-  display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.pillar:hover .pillar-icon {
-  transform: scale(1.2) rotate(5deg);
-}
-
-.pillar h3 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-}
-
-/* Featured Section */
-.featured-section {
-  margin: 60px 0;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.featured-grid {
-  display: grid;
-  gap: 24px;
-}
-
-.featured-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 32px;
-  transition: all 0.3s ease;
-  opacity: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.featured-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.1) 0%, transparent 70%);
-  transform: translate(50%, -50%);
-  transition: transform 0.5s ease;
-}
-
-.featured-card:hover::after {
-  transform: translate(30%, -30%) scale(1.5);
-}
-
-.featured-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(79, 70, 229, 0.2);
-  border-color: var(--primary);
-}
-
-.featured-card.fade-in {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.featured-tag {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: white;
-  padding: 6px 16px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.featured-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 1;
-}
-
-.featured-tech {
-  display: flex;
-  gap: 10px;
-  margin: 20px 0;
-  flex-wrap: wrap;
-}
-
-.featured-tech span {
-  background: var(--bg);
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-}
-
-.featured-link {
-  display: inline-block;
-  color: var(--primary);
-  font-weight: 600;
-  margin-top: 12px;
-  transition: all 0.2s;
-  position: relative;
-  z-index: 1;
-}
-
-.featured-link:hover {
-  transform: translateX(4px);
-  text-decoration: none;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-/* PROJECTS */
+/* ================= PROJECT CARDS ================= */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
@@ -520,1064 +161,202 @@ p { line-height: 1.6; }
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 24px;
-  transition: transform .25s, box-shadow .25s;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,.18);
-}
-
-/* MOBILE & TABLET OPTIMIZATION */
-
-/* Tablet (768px - 900px) */
-@media (max-width: 900px) {
-  .layout { 
-    grid-template-columns: 1fr; 
-  }
-  
-  .sidebar { 
-    text-align: center; 
-    border-right: none; 
-    border-bottom: 1px solid var(--border);
-    padding: 30px 24px;
-  }
-  
-  .sidebar-avatar { 
-    margin: 0 auto 16px;
-    width: 140px;
-    height: 140px;
-  }
-  
-  .sidebar-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .sidebar-links div {
-    margin-bottom: 0;
-  }
-  
-  .container { 
-    padding: 32px 32px 64px; 
-  }
-  
-  .header {
-    margin-bottom: 40px;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-  
-  .stats-section {
-    gap: 16px;
-  }
-  
-  .stat-card {
-    padding: 24px 16px;
-  }
-  
-  .stat-number {
-    font-size: 2.2rem;
-  }
-  
-  .skills-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-  }
-  
-  .pillars {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
-/* Mobile (below 768px) */
-@media (max-width: 768px) {
-  .container {
-    padding: 24px 20px 48px;
-  }
-  
-  .header {
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-    margin-bottom: 32px;
-  }
-  
-  .brand {
-    font-size: 1.4rem;
-    text-decoration: none;
-  }
-
-  .brand a {
-    text-decoration: none;
-  }
-  
-  .desktop-nav {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    border-top: 1px solid var(--border);
-    padding-top: 16px;
-  }
-  
-  .desktop-nav button {
-    margin-left: 0;
-    font-size: 0.95rem;
-    padding: 8px 12px;
-  }
-  
-  .hero {
-    margin-bottom: 40px;
-  }
-  
-  .hero-title {
-    font-size: 2rem;
-    margin-bottom: 16px;
-  }
-  
-  .hero-subtitle {
-    font-size: 1rem;
-    margin-bottom: 24px;
-  }
-  
-  .cta-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    text-align: center;
-    padding: 14px 24px;
-  }
-  
-  .stats-section {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin: 40px 0;
-  }
-  
-  .stat-card {
-    padding: 20px 16px;
-  }
-  
-  .stat-number {
-    font-size: 2rem;
-  }
-  
-  .stat-label {
-    font-size: 0.9rem;
-  }
-  
-  .section-title {
-    font-size: 1.6rem;
-    margin-bottom: 24px;
-  }
-  
-  .skills-section {
-    margin: 48px 0;
-  }
-  
-  .skills-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
-  .skill-category {
-    padding: 20px;
-  }
-  
-  .skill-category h3 {
-    font-size: 1rem;
-    margin-bottom: 12px;
-  }
-  
-  .skill-tags {
-    gap: 6px;
-  }
-  
-  .skill-tag {
-    font-size: 0.8rem;
-    padding: 5px 12px;
-  }
-  
-  .pillars-section {
-    margin: 48px 0;
-  }
-  
-  .pillars {
-    gap: 16px;
-  }
-  
-  .pillar {
-    padding: 24px 18px;
-  }
-  
-  .pillar-icon {
-    font-size: 2rem;
-    margin-bottom: 12px;
-  }
-  
-  .pillar h3 {
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-  }
-  
-  .pillar p {
-    font-size: 0.95rem;
-  }
-  
-  .featured-section {
-    margin: 48px 0;
-  }
-  
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  
-  .featured-card {
-    padding: 24px;
-  }
-  
-  .featured-card h3 {
-    font-size: 1.2rem;
-  }
-  
-  .featured-tech {
-    gap: 8px;
-  }
-  
-  .featured-tech span {
-    font-size: 0.8rem;
-    padding: 5px 12px;
-  }
-  
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
-
-
-/* MOBILE NAVIGATION */
+/* ================= MOBILE HEADER ================= */
 .mobile-header {
   display: none;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
   background: var(--bg);
   z-index: 1000;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
 }
 
 .mobile-brand a {
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--primary);
-  text-decoration: none;
 }
 
 .hamburger {
-  font-size: 2.2rem;            /* increase icon size */
-  padding: 12px 14px;         /* larger tap target */
+  font-size: 2.2rem;
+  padding: 12px 14px;
   background: none;
   border: none;
-  color: var(--text-main);
-  cursor: pointer;
-  line-height: 1;
-}
-
-
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 32px;
-  padding: 16px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.mobile-menu button {
-  background: none;
-  border: none;
-  text-align: left;
-  padding: 12px 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-main);
   cursor: pointer;
 }
 
-.desktop-nav {
-    display: none;
-  }
-
-  .mobile-header {
-    display: flex;
-  }
-  
-  /* Optimize animations for mobile */
-  .pillar:hover,
-  .stat-card:hover,
-  .skill-category:hover,
-  .featured-card:hover {
-    transform: translateY(-2px);
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .header {
-    display: none;
-  }
-
+/* ================= MOBILE DRAWER ================= */
 .mobile-drawer {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100vh;
+  inset: 0;
   background: var(--bg);
   transform: translateX(100%);
-  transition: transform 0.3s ease;
+  transition: transform .3s ease;
   z-index: 2000;
-  overflow-y: auto;
 }
 
-.mobile-drawer.open {
-  transform: translateX(0);
-}
+.mobile-drawer.open { transform: translateX(0); }
 
 .mobile-sidebar {
   padding: 32px 24px;
   text-align: center;
 }
 
-.drawer-theme-toggle {
-  margin-top: 24px;
-  padding: 12px 20px;
-  background: var(--primary);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-  .mobile-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 28px;
-}
-
-.mobile-nav button {
-  background: none;
-  border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-.mobile-nav button:hover {
-  background: var(--card);
-}
-
 .drawer-close {
   position: absolute;
   top: 16px;
   right: 16px;
-  font-size: 2.2rem;            /* bigger X */
-  padding: 12px 14px;         /* good tap area */
+  font-size: 2.2rem;
   background: none;
   border: none;
-  color: var(--text-main);
-  cursor: pointer;
-  line-height: 1;
 }
 
-
-
-
-  
-  
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
 }
 
-  
-
-/* Small mobile (below 480px) */
-@media (max-width: 480px) {
-  .sidebar {
-    padding: 24px 16px;
-  }
-  
-  .sidebar-avatar {
-    width: 120px;
-    height: 120px;
-  }
-  
-  .sidebar-name {
-    font-size: 1.2rem;
-  }
-  
-  .sidebar-bio {
-    font-size: 0.9rem;
-  }
-  
-  .sidebar-links {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-  
-  .container {
-    padding: 20px 16px 40px;
-  }
-  
-  .brand {
-    font-size: 1.2rem;
-  }
-  
-  .desktop-nav {
-    gap: 8px;
-  }
-  
-  .desktop-nav button {
-    font-size: 0.85rem;
-    padding: 6px 8px;
-  }
-  
-  .hero-title {
-    font-size: 1.75rem;
-  }
-  
-  .hero-subtitle {
-    font-size: 0.95rem;
-  }
-  
-  .btn-primary, .btn-secondary {
-    padding: 12px 20px;
-    font-size: 0.95rem;
-  }
-  
-  .section-title {
-    font-size: 1.4rem;
-  }
-  
-  .stat-number {
-    font-size: 1.8rem;
-  }
-  
-  .pillar {
-    padding: 20px 16px;
-  }
-  
-  .featured-card {
-    padding: 20px;
-  }
-  
-  .featured-tag {
-    font-size: 0.8rem;
-    padding: 5px 12px;
-  }
+.mobile-nav button {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  font-weight: 600;
 }
 
-/* Landscape mobile optimization */
-@media (max-width: 900px) and (orientation: landscape) {
-  .sidebar {
-    padding: 20px;
-  }
-  
-  .sidebar-avatar {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .sidebar-name {
-    font-size: 1.2rem;
-  }
-  
-  .sidebar-bio {
-    font-size: 0.85rem;
-    margin-bottom: 16px;
-  }
-  
-  .sidebar-links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  
-  .container {
-    padding: 24px;
-  }
-  
-  .stats-section {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar, .header { display: none; }
+  .mobile-header { display: flex; }
 }
-
-/* Touch device optimizations */
-@media (hover: none) and (pointer: coarse) {
-  .btn-primary,
-  .btn-secondary,
-  .desktop-nav button,
-  .btn-link {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .skill-tag,
-  .featured-tech span {
-    min-height: 32px;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  /* Remove hover effects on touch devices */
-  .pillar:hover::before,
-  .featured-card::after {
-    display: none;
-  }
-  
-  /* Add active states for touch feedback */
-  .btn-primary:active {
-    transform: scale(0.98);
-  }
-  
-  .btn-secondary:active {
-    transform: scale(0.98);
-  }
-  
-  .card:active,
-  .pillar:active,
-  .stat-card:active {
-    transform: scale(0.98);
-  }
-}
-
-
-/* Make whole project card clickable */
-.project-card-link {
-  text-decoration: none;
-  display: block;
-}
-
-/* Card interaction */
-.project-card {
-  cursor: pointer;
-  transition: transform 0.25s ease,
-              box-shadow 0.25s ease,
-              border-color 0.25s ease;
-  border: 2px solid var(--border);
-}
-
-/* Hover & focus state */
-.project-card:hover,
-.project-card-link:focus-visible .project-card {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 48px rgba(79, 70, 229, 0.25);
-  border-color: var(--primary);
-}
-
-/* CTA styling */
-.project-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 18px;
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 1rem;
-}
-
-/* Arrow animation */
-.project-card:hover .project-cta .arrow {
-  transform: translateX(6px);
-}
-
-.project-cta .arrow {
-  transition: transform 0.2s ease;
-}
-
-/* Mobile tap feedback */
-.project-card:active {
-  transform: scale(0.98);
-}
-
-
-
-
-
-
-
-  
 </style>
 </head>
 
 <body>
 
-<!-- Mobile Drawer -->
+<!-- ================= MOBILE DRAWER ================= -->
 <div class="mobile-drawer" id="mobileDrawer">
   <div class="mobile-sidebar">
     <button class="drawer-close" onclick="toggleDrawer()">✕</button>
-    <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Kelvin Anowu">
-
-    <h2 class="sidebar-name">Kelvin Anowu</h2>
-    <p class="sidebar-bio muted">
-      Data Scientist focused on analytics, decision-making, and real-world impact.
-    </p>
+    <img src="assets/Ugo1.jpg" class="sidebar-avatar">
+    <h2>Kelvin Anowu</h2>
+    <p class="muted">Data Scientist focused on analytics and decisions.</p>
 
     <div class="sidebar-links">
       <div>📍 Lagos, Nigeria</div>
-      <div>✉️ <a href="mailto:anowukelvin45@gmail.com">Email</a></div>
-      <div>🐙 <a href="https://github.com/ugochukwu11-glitch">GitHub</a></div>
-      <div>🔗 <a href="https://www.linkedin.com/in/kelvin-anowu-27177614b/">LinkedIn</a></div>
-      <div>𝕏 <a href="#">X</a></div>
+      <div>✉️ Email</div>
+      <div>🐙 GitHub</div>
+      <div>🔗 LinkedIn</div>
     </div>
 
-    <button class="drawer-theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-
     <nav class="mobile-nav">
-  <button onclick="navigateMobile('home')">Home</button>
-  <button onclick="navigateMobile('about')">About</button>
-  <button onclick="navigateMobile('projects')">Projects</button>
-</nav>
-
-
-
-    
+      <button onclick="navigateMobile('home')">Home</button>
+      <button onclick="navigateMobile('about')">About</button>
+      <button onclick="navigateMobile('projects')">Projects</button>
+    </nav>
   </div>
 </div>
 
-
-
-  
-
 <div class="layout">
 
-<!-- SIDEBAR -->
+<!-- ================= DESKTOP SIDEBAR ================= -->
 <aside class="sidebar">
-  <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Kelvin Anowu">
+  <img src="assets/Ugo1.jpg" class="sidebar-avatar">
   <h2 class="sidebar-name">Kelvin Anowu</h2>
   <p class="sidebar-bio muted">
     Data Scientist focused on analytics, decision-making, and real-world impact.
   </p>
-
-  <div class="sidebar-links">
-    <div>
-      📍 <span>Lagos, Nigeria</span>
-    </div>
-
-    <div>
-      ✉️ <a href="mailto:anowukelvin45@gmail.com">Email</a>
-    </div>
-
-    <div>
-      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.16 19.48c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.61.07-.61 1 .07 1.53 1.04 1.53 1.04.9 1.52 2.36 1.08 2.94.83.09-.65.35-1.08.64-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.28.1-2.67 0 0 .84-.27 2.75 1.02A9.5 9.5 0 0112 6.8a9.5 9.5 0 012.5.34c1.9-1.29 2.74-1.02 2.74-1.02.56 1.39.21 2.42.1 2.67.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.18.57.69.48A10 10 0 0012 2z"/></svg>
-      <a href="https://github.com/ugochukwu11-glitch">GitHub</a>
-    </div>
-
-    <div>
-      🔗 <a href="https://www.linkedin.com/in/kelvin-anowu-27177614b/">LinkedIn</a>
-    </div>
-
-    <div>
-      𝕏 <a href="#">X</a>
-    </div>
-  </div>
 </aside>
 
-<!-- MAIN -->
 <main class="container">
 
-  <!-- Mobile Header -->
+<!-- ================= MOBILE HEADER ================= -->
 <div class="mobile-header">
-  <div class="mobile-brand">
-    <a href="index.html">Kelvin Anowu</a>
-  </div>
-
-  <button class="hamburger" onclick="toggleDrawer()">☰</button>
-
-</div>
-
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <button onclick="handleMobileNav('home')">Home</button>
-  <button onclick="handleMobileNav('about')">About</button>
-  <button onclick="handleMobileNav('projects')">Projects</button>
-  <button onclick="toggleTheme()">🌙 Theme</button>
-</div>
-
-
-  <div class="header">
-    <div class="brand"> <a href="index.html"> Kelvin Anowu </a> </div>
-    <div class="desktop-nav">
-      <button class="active" onclick="showTab('home')">Home</button>
-      <button onclick="showTab('about')">About</button>
-      <button onclick="showTab('projects')">Projects</button>
-      <button onclick="toggleTheme()">🌙</button>
-    </div>
-  </div>
-
-  <section id="home" class="section active">
-    <div class="hero">
-      <h1 class="hero-title">Data Scientist</h1>
-      <p class="hero-subtitle muted">
-        I turn messy, real-world data into insights that drive confident decisions —
-        with a strong focus on clarity, reasoning, and business impact.
-      </p>
-      <div class="cta-buttons">
-        <button class="btn-primary" onclick="showTab('projects'); document.querySelectorAll('.desktop-nav button')[2].classList.add('active');">
-          View Projects
-        </button>
-        <button class="btn-secondary" onclick="window.location.href='mailto:anowukelvin45@gmail.com'">
-          Get in Touch
-        </button>
-      </div>
-    </div>
-
-    <!-- Stats Section -->
-    <div class="stats-section">
-      <div class="stat-card">
-        <div class="stat-number">3+</div>
-        <div class="stat-label">Projects Completed</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">1+</div>
-        <div class="stat-label">Awards and Achievements</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">6+</div>
-        <div class="stat-label">Technologies</div>
-      </div>
-    </div>
-
-    <!-- Skills Section -->
-    <div class="skills-section">
-      <h2 class="section-title">Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-category">
-          <h3>Languages</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">R</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3>Data Analysis</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Pandas</span>
-            <span class="skill-tag">NumPy</span>
-            <span class="skill-tag">Excel</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3>Machine Learning</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Scikit-learn</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">PyTorch</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <h3>Visualization</h3>
-          <div class="skill-tags">
-            <span class="skill-tag">Matplotlib</span>
-            <span class="skill-tag">Seaborn</span>
-            <span class="skill-tag">Tableau</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- What I Do Section -->
-    <div class="pillars-section">
-      <h2 class="section-title">What I Do</h2>
-      <div class="pillars">
-        <div class="pillar">
-          <div class="pillar-icon">📊</div>
-          <h3>Analytics & Insights</h3>
-          <p class="muted">
-            Translating raw data into narratives stakeholders can act on.
-          </p>
-        </div>
-
-        <div class="pillar">
-          <div class="pillar-icon">🤖</div>
-          <h3>Modeling with Purpose</h3>
-          <p class="muted">
-            Interpretable models designed for trust, not leaderboard scores.
-          </p>
-        </div>
-
-        <div class="pillar">
-          <div class="pillar-icon">💡</div>
-          <h3>Decision Support</h3>
-          <p class="muted">
-            Data work grounded in real operational and business constraints.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Featured Projects Preview -->
-   <div class="featured-section">
-  <div class="section-header">
-    <h2 class="section-title">Featured Projects</h2>
-    <button class="btn-link" onclick="showTab('projects')">
-      View All →
-    </button>
-  </div>
-
-  <div class="featured-grid">
-
-    <!-- InsightBot -->
-    <a href="projects/ds-dominion.html" class="project-card-link">
-      <div class="featured-card">
-        <div class="featured-tag">Global Competition</div>
-        <h3>InsightBot (DS Dominion)</h3>
-        <p class="muted">
-          A data science–driven news aggregation and insight platform that extracts,
-          structures, and visualizes global news trends across multiple sources.
-        </p>
-        <div class="featured-tech">
-          <span>Python</span>
-          <span>SQL</span>
-          <span>Flask</span>
-          <span>MySQL</span>
-          <span>Tableau</span>
-        </div>
-        <p class="muted"><em>4th place globally · Jury Mention by Aptech</em></p>
-        <span class="featured-link">View Project →</span>
-      </div>
-    </a>
-
-    <!-- Churn -->
-    <a href="projects/customer_churn.html" class="project-card-link">
-      <div class="featured-card">
-        <div class="featured-tag">End-to-End ML System</div>
-        <h3>Customer Churn Prediction</h3>
-        <p class="muted">
-          An end-to-end machine learning system that predicts customer churn using
-          structured telecom data and explainable models.
-        </p>
-        <div class="featured-tech">
-          <span>Python</span>
-          <span>Pandas</span>
-          <span>Scikit-learn</span>
-          <span>Streamlit</span>
-          <span>SQL</span>
-        </div>
-        <p class="muted"><em>Machine Leaning · Group Project</em></p>
-        <span class="featured-link">View Project →</span>
-      </div>
-    </a>
-
+  <div class="mobile-brand"><a href="#">Kelvin Anowu</a></div>
+  <div style="display:flex;gap:10px">
+    <button class="hamburger" onclick="toggleTheme()">🌙</button>
+    <button class="hamburger" onclick="toggleDrawer()">☰</button>
   </div>
 </div>
 
-  </section>
+<!-- ================= DESKTOP HEADER ================= -->
+<div class="header">
+  <div class="brand">Kelvin Anowu</div>
+  <div class="desktop-nav">
+    <button class="active" onclick="showTab('home')">Home</button>
+    <button onclick="showTab('about')">About</button>
+    <button onclick="showTab('projects')">Projects</button>
+    <button onclick="toggleTheme()">🌙</button>
+  </div>
+</div>
 
-  <section id="about" class="section">
+<!-- ================= HOME ================= -->
+<section id="home" class="section active">
+  <h1 class="hero-title">Data Scientist</h1>
+  <p class="hero-subtitle muted">
+    I turn messy, real-world data into insights that drive confident decisions.
+  </p>
+  <div class="cta-buttons">
+    <button class="btn-primary" onclick="showTab('projects')">View Projects</button>
+    <button class="btn-secondary">Get in Touch</button>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="section">
   <div class="card">
     <h2>About Me</h2>
-
     <p>
-      I am a Data Scientist focused on turning real-world, often messy data into
-      insights that support better decisions. I care less about chasing complexity
-      for its own sake and more about building analyses and models that people can
-      actually understand, trust, and use.
-    </p>
-
-    <p>
-      My work usually begins long before modeling — with data cleaning,
-      exploration, and asking the right questions. I enjoy breaking problems down,
-      identifying what truly matters, and communicating findings clearly and honestly.
-    </p>
-
-    <p>
-      I have worked across analytics, SQL-based exploration, automation workflows,
-      and applied machine learning. I see these not as isolated skills, but as tools
-      within a broader problem-solving process aimed at reducing uncertainty.
-    </p>
-
-    <p>
-      I value clarity, structure, and thoughtful execution. I prefer progress over
-      perfection, and explanations over assumptions.
+      I focus on building interpretable, decision-oriented data systems that
+      drive clarity and real-world impact.
     </p>
   </div>
 </section>
 
+<!-- ================= PROJECTS ================= -->
+<section id="projects" class="section">
+  <div class="projects-grid">
+    <div class="card">
+      <h3>InsightBot (DS Dominion)</h3>
+      <p class="muted">News aggregation and insight platform.</p>
+    </div>
 
-  <section id="projects" class="section">
-    <div class="projects-grid">
-     
-   <a href="../projects/ds-dominion.html" class="project-card-link">
-  <div class="card project-card">
-    <h3>InsightBot (DS Dominion)</h3>
-
-    <p class="muted">
-      A full-stack, data science–driven news aggregation and insight platform
-      that extracts, structures, and visualizes global news trends across
-      multiple sources and regions.
-    </p>
-
-    <p><strong>Focus:</strong> Web scraping, data engineering, analytics, visualization</p>
-    <p><strong>Tools:</strong> Python, SQL, Flask, MySQL, Tableau</p>
-
-    <div class="project-cta">
-      <span>View Project</span>
-      <span class="arrow">→</span>
+    <div class="card">
+      <h3>Customer Churn Prediction</h3>
+      <p class="muted">End-to-end churn prediction system.</p>
     </div>
   </div>
-</a>
-
-<a href="projects/customer_churn.html" class="project-card-link">
-  <div class="card project-card">
-    <h3>Customer Churn Prediction</h3>
-
-    <p class="muted">
-      An end-to-end machine learning system for predicting customer churn using
-      structured telecom data, exploratory analysis, and explainable models.
-    </p>
-
-    <p><strong>Focus:</strong> Predictive modeling, business decision support</p>
-    <p><strong>Tools:</strong> Python, Pandas, Scikit-learn, Streamlit</p>
-
-    <div class="project-cta">
-      <span>View Project</span>
-      <span class="arrow">→</span>
-    </div>
-  </div>
-</a>
-
-    </div>
-    
-  </section>
+</section>
 
 </main>
 </div>
 
 <script>
-// Animate elements on scroll
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('fade-in');
-    }
-  });
-}, observerOptions);
-
-document.querySelectorAll('.pillar, .stat-card, .skill-category, .featured-card').forEach(el => {
-  observer.observe(el);
-});
-
 function showTab(id){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.desktop-nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  
-  // Find and activate the correct nav button
-  const buttons = document.querySelectorAll('.desktop-nav button');
-  if(id === 'home') buttons[0].classList.add('active');
-  if(id === 'about') buttons[1].classList.add('active');
-  if(id === 'projects') buttons[2].classList.add('active');
 }
 
 function toggleTheme(){
   document.body.classList.toggle('dark');
-  const isDark = document.body.classList.contains('dark');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  event.target.textContent = isDark ? '☀️' : '🌙';
 }
 
-if(localStorage.getItem('theme')==='dark'){
-  document.body.classList.add('dark');
-  document.querySelector('.desktop-nav button:last-child').textContent = '☀️';
-}
-
-// Animate stats counter
-const animateStats = () => {
-  document.querySelectorAll('.stat-number').forEach(stat => {
-    const target = parseInt(stat.textContent);
-    let current = 0;
-    const increment = target / 50;
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        stat.textContent = target + '+';
-        clearInterval(timer);
-      } else {
-        stat.textContent = Math.floor(current) + '+';
-      }
-    }, 30);
-  });
-};
-
-// Trigger stats animation when visible
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateStats();
-      statsObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 });
-
-const statsSection = document.querySelector('.stats-section');
-if (statsSection) {
-  statsObserver.observe(statsSection);
-}
-
-
-
-  function toggleMobileMenu() {
-  const menu = document.getElementById('mobileMenu');
-  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-}
-
-function handleMobileNav(sectionId) {
-  toggleMobileMenu();
-  showTab(sectionId);
-}
-  
-function toggleDrawer() {
+function toggleDrawer(){
   document.getElementById('mobileDrawer').classList.toggle('open');
 }
 
-  
-function navigateMobile(sectionId) {
-  showTab(sectionId);
+function navigateMobile(id){
+  showTab(id);
   toggleDrawer();
 }
-
-
-  
 </script>
 
 </body>
