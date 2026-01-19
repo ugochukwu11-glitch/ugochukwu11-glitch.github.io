@@ -844,6 +844,42 @@ p { line-height: 1.6; }
   .header {
     display: none;
   }
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.mobile-drawer.open {
+  transform: translateX(0);
+}
+
+.mobile-sidebar {
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.drawer-theme-toggle {
+  margin-top: 24px;
+  padding: 12px 20px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+
+
+  
   
 }
 
@@ -1061,6 +1097,32 @@ p { line-height: 1.6; }
 
 <body>
 
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="mobile-sidebar">
+    <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Kelvin Anowu">
+
+    <h2 class="sidebar-name">Kelvin Anowu</h2>
+    <p class="sidebar-bio muted">
+      Data Scientist focused on analytics, decision-making, and real-world impact.
+    </p>
+
+    <div class="sidebar-links">
+      <div>📍 Lagos, Nigeria</div>
+      <div>✉️ <a href="mailto:anowukelvin45@gmail.com">Email</a></div>
+      <div>🐙 <a href="https://github.com/ugochukwu11-glitch">GitHub</a></div>
+      <div>🔗 <a href="https://www.linkedin.com/in/kelvin-anowu-27177614b/">LinkedIn</a></div>
+      <div>𝕏 <a href="#">X</a></div>
+    </div>
+
+    <button class="drawer-theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+</div>
+
+
+
+  
+
 <div class="layout">
 
 <!-- SIDEBAR -->
@@ -1104,9 +1166,8 @@ p { line-height: 1.6; }
     <a href="index.html">Kelvin Anowu</a>
   </div>
 
-  <button class="hamburger" onclick="toggleMobileMenu()">
-    ☰
-  </button>
+  <button onclick="toggleDrawer()">☰</button>
+
 </div>
 
 <!-- Mobile Menu -->
@@ -1454,6 +1515,10 @@ if (statsSection) {
 function handleMobileNav(sectionId) {
   toggleMobileMenu();
   showTab(sectionId);
+}
+  
+function toggleDrawer() {
+  document.getElementById('mobileDrawer').classList.toggle('open');
 }
 
 
