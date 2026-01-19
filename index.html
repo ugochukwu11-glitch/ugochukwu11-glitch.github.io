@@ -776,6 +776,12 @@ p { line-height: 1.6; }
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1000;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
 }
 
 .mobile-brand a {
@@ -815,22 +821,13 @@ p { line-height: 1.6; }
   cursor: pointer;
 }
 
-/* Mobile-only behavior */
-@media (max-width: 768px) {
-  .desktop-nav {
+.desktop-nav {
     display: none;
   }
 
   .mobile-header {
     display: flex;
   }
-}
-
-
-
-
-
-
   
   /* Optimize animations for mobile */
   .pillar:hover,
@@ -839,7 +836,18 @@ p { line-height: 1.6; }
   .featured-card:hover {
     transform: translateY(-2px);
   }
+
+  .sidebar {
+    display: none;
+  }
+
+  .header {
+    display: none;
+  }
+  
 }
+
+  
 
 /* Small mobile (below 480px) */
 @media (max-width: 480px) {
