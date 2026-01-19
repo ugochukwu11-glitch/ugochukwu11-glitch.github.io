@@ -1090,6 +1090,26 @@ p { line-height: 1.6; }
 <!-- MAIN -->
 <main class="container">
 
+  <!-- Mobile Header -->
+<div class="mobile-header">
+  <div class="mobile-brand">
+    <a href="index.html">Kelvin Anowu</a>
+  </div>
+
+  <button class="hamburger" onclick="toggleMobileMenu()">
+    ☰
+  </button>
+</div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button onclick="handleMobileNav('home')">Home</button>
+  <button onclick="handleMobileNav('about')">About</button>
+  <button onclick="handleMobileNav('projects')">Projects</button>
+  <button onclick="toggleTheme()">🌙 Theme</button>
+</div>
+
+
   <div class="header">
     <div class="brand"> <a href="index.html"> Kelvin Anowu </a> </div>
     <div class="desktop-nav">
