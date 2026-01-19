@@ -877,6 +877,38 @@ p { line-height: 1.6; }
   font-weight: 600;
 }
 
+  .mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.mobile-nav button {
+  background: none;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.mobile-nav button:hover {
+  background: var(--card);
+}
+
+.drawer-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--text-main);
+}
+
+
 
 
   
@@ -1100,6 +1132,7 @@ p { line-height: 1.6; }
 <!-- Mobile Drawer -->
 <div class="mobile-drawer" id="mobileDrawer">
   <div class="mobile-sidebar">
+    <button class="drawer-close" onclick="toggleDrawer()">✕</button>
     <img src="assets/Ugo1.jpg" class="sidebar-avatar" alt="Kelvin Anowu">
 
     <h2 class="sidebar-name">Kelvin Anowu</h2>
@@ -1116,6 +1149,16 @@ p { line-height: 1.6; }
     </div>
 
     <button class="drawer-theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <nav class="mobile-nav">
+  <button onclick="navigateMobile('home')">Home</button>
+  <button onclick="navigateMobile('about')">About</button>
+  <button onclick="navigateMobile('projects')">Projects</button>
+</nav>
+
+
+
+    
   </div>
 </div>
 
@@ -1519,6 +1562,12 @@ function handleMobileNav(sectionId) {
   
 function toggleDrawer() {
   document.getElementById('mobileDrawer').classList.toggle('open');
+}
+
+  
+function navigateMobile(sectionId) {
+  showTab(sectionId);
+  toggleDrawer();
 }
 
 
