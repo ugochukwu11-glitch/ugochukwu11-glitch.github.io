@@ -53,6 +53,24 @@ p { line-height: 1.6; }
   min-height: 100vh;
 }
 
+
+/* ===== Overlay & Drawer Utilities ===== */
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1500;
+  display: none;
+}
+
+.drawer-backdrop.active {
+  display: block;
+}
+
+
+  
+
 /* SIDEBAR */
 .sidebar {
   padding: 40px 28px;
@@ -1133,7 +1151,6 @@ p { line-height: 1.6; }
 .project-card:active {
   transform: scale(0.98);
 }
-
 
 
 
