@@ -651,186 +651,208 @@ ul li::marker {
       </summary>
       <div style="margin-top: 24px;">
         
-        <h3>1. Framing the Problem (Why This Project Exists)</h3>
-        <p>
-          The first step was to clearly define the business problem, not the technical one.
-          Customer churn represents lost revenue, and in subscription-based businesses, retention is often cheaper than acquisition. The objective was therefore not just to classify churn, but to predict churn risk early enough to enable intervention.
-        </p>
-        <p>Key decisions at this stage:</p>
-        <ul>
-          <li>Treat churn as a binary classification problem (Yes / No)</li>
-          <li>Prioritize probability outputs over hard labels to support risk-based decision making</li>
-          <li>Build a solution that is deployable, not just analytically correct</li>
-        </ul>
-        <p>This framing influenced every subsequent choice: metrics, model type, and dashboard design.</p>
+        <h3>1. Framing the Problem Correctly</h3>
+<p>
+  The starting point was to define the problem at the right level of granularity.
+  Rather than predicting whether a user will place another order in general, the
+  task was framed as a user–product–level prediction: given a user’s historical
+  behavior and a product’s reorder characteristics, can we estimate the
+  probability that the user will reorder that specific product in their next
+  purchase?
+</p>
+<p>
+  This framing reflects real e-commerce decisions such as demand forecasting,
+  replenishment planning, and personalization, where the unit of interest is not
+  the customer alone, but the interaction between a customer and a product.
+</p>
+<p>
+  Importantly, the goal was to produce probabilistic outputs, not hard labels, to
+  preserve uncertainty and support downstream decision-making.
+</p>
 
-        <h3>2. Understanding the Data (Before Touching Any Code)</h3>
-        <p>Before cleaning or modeling, the dataset was examined conceptually:</p>
-        <ul>
-          <li>What does each column represent from a customer lifecycle perspective?</li>
-          <li>Which fields are behavioral (tenure, services, billing)?</li>
-          <li>Which are demographic?</li>
-          <li>Which could realistically influence churn decisions?</li>
-        </ul>
-        <p>At this stage, the dataset was recognized as:</p>
-        <ul>
-          <li>Mixed-type (categorical + numerical)</li>
-          <li>Realistic but imperfect (whitespace issues, inconsistent labels)</li>
-          <li>Rich enough to support meaningful modeling</li>
-        </ul>
-        <p>This understanding prevented blind preprocessing and guided feature handling.</p>
+<h3>2. Understanding the Nature of Reorder Behavior</h3>
+<p>
+  Before modeling, the problem was considered conceptually. Product reordering is
+  not uniform behavior: some products are habitual (e.g. staples), while others
+  are exploratory or occasional. Similarly, some users exhibit strong
+  repeat-purchase patterns, while others do not.
+</p>
+<p>
+  This implies that reorder behavior emerges from the interaction of:
+</p>
+<ul>
+  <li>User-level purchasing habits</li>
+  <li>Product-level reorder tendencies</li>
+  <li>Temporal signals related to recency and frequency</li>
+</ul>
+<p>
+  As a result, any viable model would need to capture both user behavior and
+  product characteristics, rather than treating either in isolation.
+</p>
 
-        <h3>3. Data Cleaning Philosophy (Minimal but Correct)</h3>
-        <p>Rather than aggressive transformations, the guiding principle was: <strong>Fix what is wrong, preserve what is meaningful.</strong></p>
-        <p>Key issues identified:</p>
-        <ul>
-          <li>Hidden whitespace and control characters (e.g. "No\r")</li>
-          <li>Inconsistent categorical formatting</li>
-          <li>Numeric fields stored as strings</li>
-          <li>Potential target leakage if identifiers were not removed</li>
-        </ul>
-        <p>Actions taken:</p>
-        <ul>
-          <li>Strip whitespace and hidden characters from all categorical columns</li>
-          <li>Convert numeric columns explicitly and coerce invalid values</li>
-          <li>Drop identifier fields (customerID) from modeling</li>
-          <li>Preserve original categorical semantics (e.g. Fiber Optic vs DSL not merged)</li>
-        </ul>
-        <p>The intent was to clean without distorting the real-world meaning of the data.</p>
+<h3>3. Data Modeling Strategy (SQL-First by Design)</h3>
+<p>
+  Given the size of the dataset (tens of millions of order–product records),
+  feature engineering was deliberately performed in SQL rather than in-memory
+  notebooks.
+</p>
+<p>
+  This approach allowed:
+</p>
+<ul>
+  <li>Efficient aggregation across large tables</li>
+  <li>Explicit control over joins and groupings</li>
+  <li>Reduced memory pressure during downstream modeling</li>
+  <li>Clear visibility into how each feature was derived</li>
+</ul>
+<p>
+  The data was structured into fact-style tables representing historical
+  user–product interactions, with features designed to summarize past behavior
+  without leaking future information.
+</p>
+<p>
+  Care was taken to ensure that all features were derived strictly from prior
+  orders, maintaining temporal integrity.
+</p>
 
-        <h3>4. Exploratory Data Analysis (EDA as Hypothesis Testing)</h3>
-        <p>EDA was not treated as visualization for its own sake, but as a way to test assumptions about churn.</p>
-        <p>Each EDA question followed this structure:</p>
-        <ul>
-          <li>What behavior might increase churn?</li>
-          <li>Does the data support or contradict this idea?</li>
-        </ul>
-        <p>Examples:</p>
-        <ul>
-          <li>Tenure: New customers are more likely to churn → confirmed</li>
-          <li>Contract type: Short-term contracts imply lower commitment → confirmed</li>
-          <li>Monthly charges: Higher cost increases dissatisfaction → confirmed</li>
-          <li>Internet service type: Fiber customers show higher churn → confirmed</li>
-        </ul>
-        <p>Correlation analysis was used only to:</p>
-        <ul>
-          <li>Validate numeric consistency</li>
-          <li>Detect redundancy</li>
-          <li>Confirm no obvious data errors</li>
-        </ul>
-        <p>EDA directly informed expectations for modeling but did not hard-code decisions into the model.</p>
+<h3>4. Feature Semantics and Constraints</h3>
+<p>
+  Feature design focused on behavioral signals that are meaningful and
+  interpretable:
+</p>
+<ul>
+  <li>How many times the user has previously purchased the product</li>
+  <li>How recently the user last purchased it</li>
+  <li>How frequently the user reorders products overall</li>
+  <li>How often the product is reordered across all users</li>
+</ul>
+<p>
+  Missing values were treated as structural, not errors. For example, a missing
+  “orders since last purchase” value indicates that a product has not been
+  purchased before, which is itself informative.
+</p>
+<p>
+  The guiding principle was to preserve semantic meaning rather than aggressively
+  imputing or transforming data.
+</p>
 
-        <h3>5. Feature Engineering Strategy (Restraint Over Complexity)</h3>
-        <p>The dataset already contained meaningful features, so the approach was: <strong>Avoid unnecessary feature invention unless there is strong justification.</strong></p>
-        <p>Key decisions:</p>
-        <ul>
-          <li>One-hot encode categorical variables</li>
-          <li>Avoid ordinal encoding for nominal categories</li>
-          <li>Preserve binary indicators as 0/1</li>
-          <li>Exclude the target and identifiers strictly</li>
-        </ul>
-        <p>No synthetic features were added because:</p>
-        <ul>
-          <li>Tree-based models can learn interactions naturally</li>
-          <li>Over-engineering risks noise amplification</li>
-        </ul>
-        <p>This ensured the model learned from authentic customer behavior, not artificial constructs.</p>
+<h3>5. Baseline Modeling and Expectations</h3>
+<p>
+  A simple, interpretable baseline was established first to set expectations and
+  validate the signal in the data. This helped answer an early question: does the
+  data actually contain predictive structure for reordering?
+</p>
+<p>
+  Once this was confirmed, more expressive models were explored to capture
+  non-linear relationships and interactions that simple linear models cannot
+  represent.
+</p>
+<p>
+  Model selection prioritized:
+</p>
+<ul>
+  <li>Stability across validation splits</li>
+  <li>Ability to handle sparse, tabular data</li>
+  <li>Support for per-instance attribution signals</li>
+</ul>
 
-        <h3>6. Model Selection Reasoning (Why These Algorithms)</h3>
-        <p>Multiple algorithms were tested to balance interpretability, performance, and robustness:</p>
-        <ul>
-          <li><strong>Logistic Regression:</strong> Baseline model, interpretable coefficients, benchmark for performance comparison</li>
-          <li><strong>Random Forest:</strong> Handles nonlinear interactions, robust to noise, provides feature importance</li>
-          <li><strong>Tuned Random Forest:</strong> Optimized depth, trees, and splits; balanced recall and precision better than baseline</li>
-          <li><strong>XGBoost:</strong> High-performance gradient boosting, tested for comparison, not defaulted blindly</li>
-        </ul>
-        <p>The final model was chosen not solely on accuracy, but on:</p>
-        <ul>
-          <li>ROC-AUC</li>
-          <li>Recall on churn class</li>
-          <li>Stability</li>
-          <li>Explainability</li>
-        </ul>
-        <p>This reflects real business constraints, not leaderboard optimization.</p>
+<h3>6. Model Choice and Evaluation Philosophy</h3>
+<p>
+  Gradient-boosted decision trees were selected as the final modeling approach due
+  to their strong performance on structured data and their ability to provide
+  feature attribution at the individual prediction level.
+</p>
+<p>
+  Evaluation focused on:
+</p>
+<ul>
+  <li>ROC-AUC as a measure of ranking quality</li>
+  <li>Precision–recall trade-offs under different thresholds</li>
+  <li>The behavior of the model across low- and high-confidence predictions</li>
+</ul>
+<p>
+  Accuracy alone was not emphasized, as the class distribution and business
+  context make probabilistic ranking more relevant than strict classification.
+</p>
 
-        <h3>7. Evaluation Philosophy (Metrics That Matter)</h3>
-        <p>Accuracy alone was explicitly rejected as insufficient due to class imbalance.</p>
-        <p>The evaluation focused on:</p>
-        <ul>
-          <li>ROC-AUC: overall discriminatory power</li>
-          <li>Recall (churn class): missing a churner is costly</li>
-          <li>Precision-Recall tradeoff: balance intervention cost vs benefit</li>
-        </ul>
-        <p>Thresholds were treated as business levers, not fixed rules:</p>
-        <ul>
-          <li>Probabilities enable tiered risk classification</li>
-          <li>High-risk vs medium-risk segmentation enables prioritization</li>
-        </ul>
-        <p>This aligns the model with real operational use, not academic metrics alone.</p>
+<h3>7. Interpreting Predictions at the Decision Level</h3>
+<p>
+  Rather than stopping at global feature importance, the focus shifted to
+  per-prediction explanations.
+</p>
+<p>
+  For each prediction, the model produces attribution signals indicating which
+  features pushed the prediction higher or lower relative to the baseline. These
+  signals are statistical in nature and describe model behavior, not causality.
+</p>
+<p>
+  This level of interpretability is critical when predictions are used to support
+  operational decisions rather than offline analysis.
+</p>
 
-        <h3>8. Explainability as a Requirement, Not an Add-On</h3>
-        <p>Feature importance analysis was used to answer: <strong>"Can we explain this prediction to a non-technical stakeholder?"</strong></p>
-        <p>Top drivers such as tenure, contract type, and charges:</p>
-        <ul>
-          <li>Made intuitive sense</li>
-          <li>Aligned with EDA findings</li>
-          <li>Increased trust in the model</li>
-        </ul>
-        <p>This step ensured the model could support decision-making, not just prediction.</p>
+<h3>8. Integrating an AI Interpretation Layer</h3>
+<p>
+  While model attributions are informative, they are not always easily digestible
+  by non-technical stakeholders. To address this, a constrained language model was
+  introduced to translate attribution signals into short, neutral explanations.
+</p>
+<p>
+  The AI layer was deliberately limited:
+</p>
+<ul>
+  <li>It does not generate predictions</li>
+  <li>It does not provide recommendations</li>
+  <li>It does not infer causality</li>
+  <li>It only summarizes model signals already computed</li>
+</ul>
+<p>
+  This preserves analytical integrity while improving accessibility.
+</p>
 
-        <h3>9. Deployment Thinking (From Model to Product)</h3>
-        <p>Rather than stopping at a trained model, the project was designed as a usable system.</p>
-        <p>Key design choices:</p>
-        <ul>
-          <li>Persist model and feature schema (.pkl)</li>
-          <li>Store predictions in a database</li>
-          <li>Separate training from inference</li>
-          <li>Build a dashboard for consumption</li>
-        </ul>
-        <p>The Streamlit dashboard was intentionally designed to:</p>
-        <ul>
-          <li>Show probabilities, not just labels</li>
-          <li>Rank customers by risk</li>
-          <li>Support exploration, not overwhelm users</li>
-        </ul>
-        <p>This transformed the project from analysis into a data product.</p>
+<h3>9. System-Level Perspective</h3>
+<p>
+  The final system is best understood as a pipeline:
+</p>
+<ul>
+  <li>SQL-based feature construction at scale</li>
+  <li>Supervised machine learning for probabilistic prediction</li>
+  <li>Attribution-based interpretability at the individual level</li>
+  <li>AI-assisted explanation constrained to model outputs</li>
+</ul>
+<p>
+  Each component serves a specific role, and no single part attempts to solve the
+  entire problem alone.
+</p>
 
-        <h3>10. Dashboard Design Philosophy (Clarity Over Density)</h3>
-        <p>The dashboard design followed these principles:</p>
-        <ul>
-          <li>Start with KPIs → context before detail</li>
-          <li>Visualize patterns before tables</li>
-          <li>Summarize insights beneath charts</li>
-          <li>Allow drill-down for advanced users</li>
-        </ul>
-        <p>EDA, predictions, feature importance, and single-customer prediction were separated to avoid cognitive overload.</p>
-        <p>This mirrors professional BI and ML product design.</p>
+<h3>10. Reflection on Trade-Offs</h3>
+<p>
+  Several trade-offs were made deliberately:
+</p>
+<ul>
+  <li>Interpretability over maximum complexity</li>
+  <li>SQL-first processing over notebook convenience</li>
+  <li>Local LLM inference over external APIs</li>
+  <li>Clear separation between prediction and explanation</li>
+</ul>
+<p>
+  These decisions favor reliability, transparency, and realism over novelty.
+</p>
 
-        <h3>11. Reflection on Trade-Offs</h3>
-        <p>Every decision involved trade-offs:</p>
-        <ul>
-          <li>Simpler models vs maximum performance</li>
-          <li>Interpretability vs complexity</li>
-          <li>Flexibility vs automation</li>
-        </ul>
-        <p>The final system favors:</p>
-        <ul>
-          <li>Reliability</li>
-          <li>Explainability</li>
-          <li>Business relevance</li>
-          <li>Maintainability</li>
-        </ul>
-        <p>These priorities reflect real-world data science, not just experimentation.</p>
+<h3>11. Mental Model Behind the Project</h3>
+<p>
+  The guiding mental loop throughout the project was:
+</p>
+<ul>
+  <li>Observe behavior</li>
+  <li>Summarize history</li>
+  <li>Predict likelihood</li>
+  <li>Explain signals</li>
+</ul>
+<p>
+  This loop mirrors how real-world data products operate, where trust and clarity
+  are as important as predictive performance.
+</p>
 
-        <h3>12. Overall Mental Model</h3>
-        <p>The project was guided by a simple mental loop: <strong>Understand → Validate → Predict → Explain → Deploy</strong></p>
-        <p>Each stage reinforced the others:</p>
-        <ul>
-          <li>EDA validated modeling choices</li>
-          <li>Modeling confirmed EDA hypotheses</li>
-          <li>Explainability validated trust</li>
-          <li>Deployment validated usefulness</li>
-        </ul>
         
       </div>
     </details>
@@ -846,7 +868,16 @@ ul li::marker {
     <h2>Problem Definition</h2>
   </div>
   <div class="card">
-    <div class="challenge-list">
+    <p>
+  Predicting product reorders in large-scale e-commerce systems is challenging because
+  customer purchasing behavior is highly variable, context-dependent, and sparsely
+  observed at the individual product level. The problem requires modeling millions of
+  user–product interactions while avoiding data leakage, handling class imbalance, and
+  producing predictions that are not only accurate but interpretable at the level of
+  individual decisions.
+</p>
+
+   <!-- <div class="challenge-list">
       <div class="challenge-item">
         <span class="challenge-icon">⚠️</span>
         <span>High customer churn leading to revenue loss</span>
@@ -863,12 +894,12 @@ ul li::marker {
         <span class="challenge-icon">🔍</span>
         <span>Need for probability-based, interpretable predictions</span>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 
 <!-- EDA -->
-<section class="section">
+<!-- <section class="section">
   <div class="section-header">
     <span class="section-icon">🔍</span>
     <h2>Exploratory Data Analysis</h2>
@@ -899,7 +930,7 @@ ul li::marker {
       <div class="image-caption">Correlation between numeric features validates data consistency</div>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- Modeling -->
 <section class="section">
