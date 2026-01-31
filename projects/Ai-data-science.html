@@ -951,8 +951,12 @@ ul li::marker {
 
 
     <div class="image-container">
-      <img src="../assets/churn_feature_importance.png" alt="Feature Importance">
-      <div class="image-caption">Feature attribution signals produced by the trained LightGBM model</div>
+      <img src="../assets/model.png" alt="model/feature importance">
+      <div class="image-caption">LightGBM model trained on over 1.4 million user–product interactions with early stopping and a user-aware validation split. Performance is evaluated using ROC-AUC and threshold-based precision–recall metrics to reflect real-world ranking and decision trade-offs rather than raw accuracy.</div>
+    </div>
+     <div class="image-container">
+      <img src="../assets/feature.png" alt="model/feature importance">
+      <div class="image-caption">Feature importance analysis highlights recency, frequency, and historical reorder behavior as the dominant signals driving predictions, confirming that the model learns meaningful behavioral patterns rather than spurious correlations.</div>
     </div>
   </div>
 </section>
@@ -984,7 +988,9 @@ ul li::marker {
 
     <div class="image-container">
       <img src="../assets/insight2.png" alt="ai ingsight">
-      <div class="image-caption">High-risk customers ranked by churn probability</div>
+      <div class="image-caption">The language model summarizes per-prediction feature influences produced
+by the trained machine-learning model, without generating predictions or
+introducing external assumptions</div>
     </div>
   </div>
 </section>
