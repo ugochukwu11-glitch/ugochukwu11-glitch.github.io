@@ -898,6 +898,88 @@ ul li::marker {
   </div>
 </section>
 
+  
+<!-- Dataset -->
+  <section class="section">
+  <div class="section-header">
+    <span class="section-icon">📦</span>
+    <h2>Dataset & Data Construction</h2>
+  </div>
+  <div class="card">
+    <p>
+      This project is built on the Instacart Market Basket Analysis dataset, which
+      contains tens of millions of order–product interactions across users,
+      products, and time. Rather than modeling directly on raw transactional
+      tables, the data was restructured into a modeling-ready format through a
+      series of intermediate aggregation steps.
+    </p>
+        <p>
+      The raw dataset is highly normalized and optimized for transactional storage,
+      not predictive modeling. A single reorder decision is distributed across
+      multiple tables, making it unsuitable for direct use without careful
+      restructuring.
+    </p>
+        <ul>
+      <li><strong>orders</strong> — order-level metadata including user, order sequence, and timing</li>
+      <li><strong>order_products__prior</strong> — historical product purchases per order</li>
+      <li><strong>order_products__train</strong> — labeled reorder outcomes for supervision</li>
+      <li><strong>products</strong> — product identifiers and metadata</li>
+      <li><strong>aisles / departments</strong> — product taxonomy</li>
+    </ul>
+        <p>
+      To support scalable modeling, several intermediate tables were constructed
+      to summarize historical behavior at the user–product level. All feature
+      engineering was performed in SQL to ensure performance, transparency, and
+      strict temporal control.
+    </p>
+
+    <ul>
+      <li>
+        <strong>User–Product History Table</strong> — aggregates prior purchase
+        counts and recency signals for each user–product pair
+      </li>
+      <li>
+        <strong>User Behavior Summary Table</strong> — captures overall user reorder
+        tendencies across all products
+      </li>
+      <li>
+        <strong>Product Reorder Statistics Table</strong> — summarizes global
+        reorder frequency per product
+      </li>
+      <li>
+        <strong>Model Dataset Table</strong> — a denormalized table combining all
+        features with a binary reorder target
+      </li>
+    </ul>
+
+        <p>
+      Special care was taken to preserve temporal integrity. All features were
+      derived strictly from historical orders that occurred before the prediction
+      point, ensuring that no future information leaked into the training data.
+    </p>
+
+    <ul>
+      <li>Order sequence numbers were used to separate past behavior from future outcomes</li>
+      <li>Aggregations explicitly excluded the order being predicted</li>
+      <li>User-based train/validation splits prevented cross-user leakage</li>
+    </ul>
+
+        <div class="highlight-box">
+      <p>
+        <strong>Why this matters:</strong> The predictive power of the model is driven
+        primarily by how historical behavior is summarized. The majority of the
+        project’s complexity lies in data modeling rather than algorithm selection.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
 <!-- EDA -->
 <!-- <section class="section">
   <div class="section-header">
