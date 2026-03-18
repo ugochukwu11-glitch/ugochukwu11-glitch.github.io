@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/assets/ka.png">
+<title>WhatsApp AI Property Assistant for Real Estate Agencies</title>
+
+<style>
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --accent: #06b6d4;
+  --success: #10b981;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-heading: #020617;
+  --border: #e5e7eb;
+  --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+body.dark {
+  --primary: #818cf8;
+  --accent: #22d3ee;
+  --success: #34d399;
+  --bg: #0b1220;
+  --card: #111827;
+  --text-main: #f8fafc;
+  --text-muted: #9ca3af;
+  --text-heading: #ffffff;
+  --border: #1f2937;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  background: var(--bg);
+  color: var(--text-main);
+  transition: background 0.3s, color 0.3s;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.hero-section {
+  background: var(--gradient);
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-content {
+  max-width: 860px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateX(-4px);
+  text-decoration: none;
+  color: white;
+}
+
+.project-title {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.project-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.6;
+  max-width: 700px;
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.container {
+  max-width: 860px;
+  margin: auto;
+  padding: 60px 24px 100px;
+}
+
+.section {
+  margin-top: 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.section-icon {
+  font-size: 2rem;
+}
+
+h2 {
+  color: var(--text-heading);
+  font-size: 2rem;
+  margin: 0;
+}
+
+h3 {
+  color: var(--text-heading);
+  font-size: 1.4rem;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+p, li {
+  line-height: 1.7;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.04);
+}
+
+.highlight-box {
+  background: rgba(79, 70, 229, 0.08);
+  border-left: 4px solid var(--primary);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 24px;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tech-tag {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.stat-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.image-container {
+  margin-top: 28px;
+}
+
+.image-container img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.image-caption {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 64px 20px 48px;
+  }
+
+  .project-title {
+    font-size: 2.2rem;
+  }
+
+  .project-subtitle {
+    font-size: 1rem;
+  }
+
+  .container {
+    padding: 40px 20px 80px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="hero-section">
+  <div class="hero-content">
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+
+    <h1 class="project-title">WhatsApp AI Property Assistant for Real Estate Agencies</h1>
+
+    <p class="project-subtitle">
+      A multi-tenant automation system that turns WhatsApp inquiries into qualified leads,
+      property matches, scheduled inspections, and real-time agent alerts.
+    </p>
+
+    <div class="project-meta">
+      <div class="meta-item">
+        <span>📅</span>
+        <span>2026</span>
+      </div>
+      <div class="meta-item">
+        <span>🏗️</span>
+        <span>Personal Product / Startup Prototype</span>
+      </div>
+      <div class="meta-item">
+        <span>⚡</span>
+        <span>AI + Automation + CRM</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <section class="section" style="margin-top: 40px;">
+    <div class="section-header">
+      <span class="section-icon">🛠️</span>
+      <h2>Tech Stack</h2>
+    </div>
+    <div class="tech-stack">
+      <span class="tech-tag">Next.js</span>
+      <span class="tech-tag">TypeScript</span>
+      <span class="tech-tag">n8n</span>
+      <span class="tech-tag">Supabase</span>
+      <span class="tech-tag">Postgres</span>
+      <span class="tech-tag">WhatsApp Cloud API</span>
+      <span class="tech-tag">Ollama</span>
+      <span class="tech-tag">Cloudflare Tunnel</span>
+    </div>
+  </section>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-number">Multi</div>
+      <div class="stat-label">Tenant Agency Support</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">Live</div>
+      <div class="stat-label">Workflow Prototype</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">Hybrid</div>
+      <div class="stat-label">AI + Deterministic Logic</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <h2>Project Overview</h2>
+    </div>
+    <div class="card">
+      <p>
+        This project turns WhatsApp into a front door for real estate agencies. The
+        system captures buyer intent conversationally, stores lead and conversation
+        state in Supabase, searches an agency's property inventory, sends listing
+        images inside WhatsApp, schedules inspections, scores lead intent, and alerts
+        agents when a lead becomes qualified or shows strong buying signals.
+      </p>
+
+      <p>
+        It is built as a multi-tenant product rather than a standalone bot. A Next.js
+        agency portal handles listings, agents, leads, and human takeover, while n8n
+        workflows orchestrate lead qualification, property matching, media delivery,
+        lead scoring, and notifications behind the scenes.
+      </p>
+
+      <div class="highlight-box">
+        <p>
+          <strong>Core principle:</strong> AI makes the conversation feel natural, but
+          the database, workflow state, property search, scoring, and handoff controls
+          remain deterministic so the business logic stays dependable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <h2>Problem Definition</h2>
+    </div>
+    <div class="card">
+      <p>
+        Real estate agencies often receive leads through WhatsApp, but those
+        conversations are usually handled manually. That creates inconsistent
+        qualification, slow follow-up, missing context, weak visibility into lead
+        quality, and poor escalation when a lead turns serious.
+      </p>
+
+      <ul>
+        <li>Qualification questions are repetitive and time-consuming for agents.</li>
+        <li>Lead context gets trapped inside chats instead of becoming structured data.</li>
+        <li>Listing recommendations and images are sent inconsistently.</li>
+        <li>There is no reliable memory of buyer preferences across turns.</li>
+        <li>Human takeover is difficult without an operational dashboard.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🧭</span>
+      <h2>Decision Rationale</h2>
+    </div>
+    <div class="card">
+      <ul>
+        <li>n8n was chosen so the workflows stay visual, editable, and easy to inspect.</li>
+        <li>Supabase provides a practical all-in-one backend for Postgres, REST access, and media storage.</li>
+        <li>WhatsApp Cloud API was necessary because the user journey starts inside WhatsApp, not a custom app.</li>
+        <li>Ollama supported local inference under a self-hosted cost constraint.</li>
+        <li>Deterministic routing was layered on top of AI after pure AI orchestration caused repeated questions and unreliable actions.</li>
+        <li>Worker workflows kept the main orchestration manageable and easier to debug.</li>
+        <li>Portal-based takeover was added because agencies need operational control over when the bot should stop replying.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">💡</span>
+      <h2>Full Thought Process</h2>
+    </div>
+    <div class="card">
+      <details>
+        <summary style="cursor: pointer; font-weight: 600; font-size: 1.1rem; color: var(--primary); padding: 8px 0;">
+          Click to expand full thought process
+        </summary>
+        <div style="margin-top: 24px;">
+          <h3>1. Start with the real communication channel</h3>
+          <p>
+            The project started from a product truth: buyers already reach agencies on
+            WhatsApp. Instead of moving them into another interface, the system needed
+            to operate inside the channel they already trust and use every day.
+          </p>
+
+          <h3>2. Add memory before intelligence</h3>
+          <p>
+            A bot is not useful if it forgets what was already said. That made lead
+            state, conversation memory, and listing context more important than the
+            first AI prompt. Supabase became the source of truth before the AI layer
+            was allowed to make the experience more flexible.
+          </p>
+
+          <h3>3. Let AI interpret language, not own the workflow</h3>
+          <p>
+            AI helped interpret messy natural language, but critical actions such as
+            state transitions, listing search, scoring, notification triggers, and
+            handoff rules had to remain deterministic. That reduced repeated loops and
+            made the workflow reliable enough for production-like use.
+          </p>
+
+          <h3>4. Treat listing discovery as a conversion flow</h3>
+          <p>
+            Sending a property name is not enough. A serious buyer needs relevant
+            options, images, follow-up questions, and a path into viewing or
+            negotiation. That led to explicit handling for selected property context,
+            image delivery, scheduling, and alerts.
+          </p>
+
+          <h3>5. Build for agencies as much as for buyers</h3>
+          <p>
+            The assistant had to be backed by a portal where agencies can upload
+            listings, manage agents, review leads, and take over chats. Without the
+            agency-side operating layer, the automation would stay a demo instead of a
+            usable product.
+          </p>
+
+          <h3>6. Design for multi-tenant trust</h3>
+          <p>
+            Once the system became multi-tenant, agency isolation became a product
+            requirement. Property search, notifications, and lead management had to be
+            scoped safely to the correct tenant to avoid serious operational mistakes.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🏛️</span>
+      <h2>Architecture & Data Model</h2>
+    </div>
+    <div class="card">
+      <p>
+        The system is organized around three layers: a Next.js agency portal for
+        management, Supabase for data and media storage, and n8n workflows for
+        automation and orchestration. The database models agencies, agents,
+        properties, property images, leads, conversation state, notifications, and
+        worker logs so every workflow step can rely on shared state.
+      </p>
+
+      <div class="image-container">
+        <img src="../assets/DB_Schema.png" alt="Supabase database schema for the property assistant">
+        <div class="image-caption">Supabase schema connecting agencies, agents, properties, images, leads, conversation state, notifications, and worker logs.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">💬</span>
+      <h2>Lead Qualification & Property Discovery</h2>
+    </div>
+    <div class="card">
+      <p>
+        The assistant qualifies buyers conversationally by collecting area, budget,
+        property type, bedrooms, and timing. Once enough context exists, it searches
+        the correct agency inventory, returns matching options, sends property images
+        directly in chat, and continues the conversation toward negotiation or viewing.
+      </p>
+
+      <div class="image-container">
+        <img src="../assets/chat_lead.png" alt="WhatsApp conversation showing listing suggestions and image delivery">
+        <div class="image-caption">WhatsApp conversation flow showing qualification, listing suggestion, property image delivery, and negotiation follow-up.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🏢</span>
+      <h2>Agency Portal</h2>
+    </div>
+    <div class="card">
+      <p>
+        The agency portal gives the business side of the system full operational
+        control. Agencies can manage listings, upload inventory, assign agents,
+        inspect lead state, and take over conversations when automation should stop
+        replying.
+      </p>
+
+      <div class="image-container">
+        <img src="../assets/leads.png" alt="Leads page in the agency portal">
+        <div class="image-caption">Lead management screen showing score, stage, assigned agent, bot status, and takeover controls.</div>
+      </div>
+
+      <div class="image-container">
+        <img src="../assets/Listings_on_portal.png" alt="Listings page in the agency portal">
+        <div class="image-caption">Portal inventory view where agencies manage the property catalog used by the WhatsApp assistant.</div>
+      </div>
+
+      <div class="image-container">
+        <img src="../assets/upload_listing.png" alt="Create listing page in the agency portal">
+        <div class="image-caption">New listing flow used to upload property details and images into the agency inventory.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <h2>Automation Workflows</h2>
+    </div>
+    <div class="card">
+      <p>
+        The main n8n workflow handles inbound message normalization, dedupe, state
+        retrieval, routing, and persistence. Worker workflows isolate specialized
+        responsibilities so complex operations can be hardened independently without
+        making the main orchestration too crowded.
+      </p>
+
+      <div class="image-container">
+        <img src="../assets/image_delivery_worker.png" alt="n8n image delivery worker workflow">
+        <div class="image-caption">Dedicated image delivery worker responsible for resolving media, uploading it to WhatsApp, and updating delivery state safely.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🔥</span>
+      <h2>Lead Scoring & Agent Alerts</h2>
+    </div>
+    <div class="card">
+      <p>
+        The system scores buyer intent based on field completion and high-intent
+        signals such as image requests, negotiation language, and viewing requests.
+        When a lead becomes warm or hot, the assigned agent receives a structured
+        WhatsApp notification with the context needed to step in quickly.
+      </p>
+
+      <div class="image-container">
+        <img src="../assets/notify_agent.jpeg" alt="WhatsApp notifications for warm and hot leads">
+        <div class="image-caption">Agent-facing WhatsApp alerts showing warm and hot lead summaries with phone, budget, property context, and trigger reason.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🧩</span>
+      <h2>Challenges & Solutions</h2>
+    </div>
+    <div class="card">
+      <ul>
+        <li>Repeated AI questions were fixed by making database state authoritative and routing follow-up questions deterministically.</li>
+        <li>Malformed AI JSON was handled with safer parsing and repair before business logic executed.</li>
+        <li>Supabase null-field and upsert issues were reduced by normalizing phone numbers early and writing only valid updates.</li>
+        <li>Image delivery failures were resolved by redesigning the media pipeline into a dedicated worker workflow.</li>
+        <li>Date and time scheduling became more reliable after adding hybrid parsing instead of relying only on model output.</li>
+        <li>Cross-agency listing leakage was prevented by scoping inventory search strictly to the mapped agency.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">👤</span>
+      <h2>My Contribution</h2>
+    </div>
+    <div class="card">
+      <p>
+        This project was built as a personal product and startup-style prototype. I
+        designed and implemented the end-to-end experience across automation,
+        backend structure, product logic, and agency operations.
+      </p>
+
+      <ul>
+        <li>Designed the multi-tenant product architecture and workflow model.</li>
+        <li>Built the WhatsApp automation flows in n8n, including worker workflows.</li>
+        <li>Designed and evolved the Supabase schema for listings, leads, images, and state.</li>
+        <li>Developed the Next.js agency portal for listings, agents, leads, and takeover controls.</li>
+        <li>Integrated WhatsApp Cloud API, Supabase, Ollama, and Cloudflare tunnel infrastructure.</li>
+        <li>Defined lead scoring logic, alerting triggers, and the human handoff model.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">💭</span>
+      <h2>Reflection & Learnings</h2>
+    </div>
+    <div class="card">
+      <p>
+        This project reinforced that conversational AI becomes truly useful only when
+        it is anchored to durable state, clear business rules, and an operational
+        interface that real teams can trust. It also highlighted how early product
+        decisions around tenant isolation and human handoff become critical as soon
+        as a prototype starts resembling a real workflow.
+      </p>
+
+      <div class="highlight-box">
+        <p>
+          <strong>Key takeaway:</strong> AI works best in operational products when it
+          handles language flexibility while deterministic systems protect context,
+          workflow safety, and business-critical decisions.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+}
+</script>
+</body>
+</html>
