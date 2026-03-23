@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="/assets/ka.png">
+<title>AI Voice Lead Capture & Qualification System for Real Estate</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6NZP2J34TW"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-6NZP2J34TW');
+</script>
+
+<style>
+:root {
+  --primary: #4f46e5;
+  --primary-dark: #4338ca;
+  --accent: #06b6d4;
+  --success: #10b981;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-heading: #020617;
+  --border: #e5e7eb;
+  --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+body.dark {
+  --primary: #818cf8;
+  --accent: #22d3ee;
+  --success: #34d399;
+  --bg: #0b1220;
+  --card: #111827;
+  --text-main: #f8fafc;
+  --text-muted: #9ca3af;
+  --text-heading: #ffffff;
+  --border: #1f2937;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+  background: var(--bg);
+  color: var(--text-main);
+  transition: background 0.3s, color 0.3s;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.hero-section {
+  background: var(--gradient);
+  padding: 80px 24px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+  opacity: 0.3;
+}
+
+.hero-content {
+  max-width: 860px;
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateX(-4px);
+  text-decoration: none;
+  color: white;
+}
+
+.project-title {
+  font-size: 3rem;
+  color: white;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.project-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.6;
+  max-width: 720px;
+}
+
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.container {
+  max-width: 860px;
+  margin: auto;
+  padding: 60px 24px 100px;
+}
+
+.section {
+  margin-top: 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.section-icon {
+  font-size: 2rem;
+}
+
+h2 {
+  color: var(--text-heading);
+  font-size: 2rem;
+  margin: 0;
+}
+
+h3 {
+  color: var(--text-heading);
+  font-size: 1.35rem;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+p, li {
+  line-height: 1.7;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.04);
+}
+
+.highlight-box {
+  background: rgba(79, 70, 229, 0.08);
+  border-left: 4px solid var(--primary);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 24px;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tech-tag {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.stat-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.image-container {
+  margin-top: 28px;
+}
+
+.image-container img {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.image-caption {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-section { padding: 64px 20px 48px; }
+  .project-title { font-size: 2.2rem; }
+  .project-subtitle { font-size: 1rem; }
+  .container { padding: 40px 20px 80px; }
+  .card { padding: 24px; }
+  .stats-grid { grid-template-columns: 1fr; }
+  h2 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+<div class="hero-section">
+  <div class="hero-content">
+    <a href="../index.html" class="back-link">← Back to Portfolio</a>
+
+    <h1 class="project-title">AI Voice Lead Capture & Qualification System for Real Estate</h1>
+    <p class="project-subtitle">
+      An AI-powered voice workflow that answers inbound real estate calls, captures structured
+      lead data, prevents duplicates, scores urgency, and routes high-intent prospects instantly.
+    </p>
+
+    <div class="project-meta">
+      <div class="meta-item">
+        <span>📅</span>
+        <span>March 2026</span>
+      </div>
+      <div class="meta-item">
+        <span>🏗️</span>
+        <span>Personal Project</span>
+      </div>
+      <div class="meta-item">
+        <span>⚡</span>
+        <span>Vapi + n8n + Google Sheets</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <section class="section" style="margin-top: 40px;">
+    <div class="section-header">
+      <span class="section-icon">🛠️</span>
+      <h2>Tech Stack</h2>
+    </div>
+    <div class="tech-stack">
+      <span class="tech-tag">Vapi</span>
+      <span class="tech-tag">n8n</span>
+      <span class="tech-tag">JavaScript</span>
+      <span class="tech-tag">Google Sheets</span>
+      <span class="tech-tag">Gmail</span>
+      <span class="tech-tag">n8n Cloud</span>
+      <span class="tech-tag">Google Cloud OAuth</span>
+    </div>
+  </section>
+
+  <div class="stats-grid">
+    <div class="stat-box">
+      <div class="stat-number">Voice</div>
+      <div class="stat-label">Inbound Lead Capture</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">Zero</div>
+      <div class="stat-label">Duplicate Lead Goal</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">Real-Time</div>
+      <div class="stat-label">Lead Alerting</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">📋</span>
+      <h2>Project Overview</h2>
+    </div>
+    <div class="card">
+      <p>
+        This project is an end-to-end AI automation system built for real estate lead capture.
+        It answers inbound calls with a voice assistant, extracts structured buyer details,
+        scores lead quality, stores the result in Google Sheets without duplication, and alerts
+        agents when the lead is urgent enough to deserve immediate follow-up.
+      </p>
+      <p>
+        The workflow was designed to feel production-ready while staying lightweight. Instead
+        of a custom backend, it uses Vapi for voice interaction, n8n Cloud for orchestration,
+        Google Sheets as a simple CRM layer, and Gmail for conditional notifications.
+      </p>
+      <div class="highlight-box">
+        <p>
+          <strong>Core principle:</strong> use voice AI to collect information naturally,
+          but keep the qualification, normalization, deduplication, scoring, and routing logic
+          explicit so the workflow stays reliable.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <h2>Problem Definition</h2>
+    </div>
+    <div class="card">
+      <p>
+        Real estate agencies regularly miss or delay inbound leads because calls are not captured,
+        structured, or prioritized consistently. Serious prospects often depend on how quickly a team
+        responds, yet many agencies still rely on manual note-taking or unstructured follow-up.
+      </p>
+      <ul>
+        <li>No structured capture of caller information from inbound calls.</li>
+        <li>Important prospects can be lost if the details are not logged immediately.</li>
+        <li>No system for distinguishing high-intent callers from lower-priority inquiries.</li>
+        <li>Duplicate entries create clutter and confusion inside lightweight CRMs.</li>
+        <li>Follow-up alerts are often manual or delayed.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🧭</span>
+      <h2>Decision Rationale</h2>
+    </div>
+    <div class="card">
+      <ul>
+        <li>n8n was chosen over simpler automation tools because it allowed custom logic and clearer control over branching.</li>
+        <li>Google Sheets was used as a lightweight CRM because it is fast to set up, easy to inspect, and practical for MVP-style operations.</li>
+        <li>Phone number became the unique key because it is the most reliable identifier across inbound calls.</li>
+        <li>Append-or-update logic kept the workflow simpler and more scalable than manual lookup branches.</li>
+        <li>Vapi was the right interface because high-intent real estate leads often arrive through calls, not forms.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">💡</span>
+      <h2>Full Thought Process</h2>
+    </div>
+    <div class="card">
+      <details>
+        <summary style="cursor: pointer; font-weight: 600; font-size: 1.1rem; color: var(--primary); padding: 8px 0;">
+          Click to expand full thought process
+        </summary>
+        <div style="margin-top: 24px;">
+          <h3>1. Start with the highest-intent channel</h3>
+          <p>
+            Real estate calls are often high-value moments because the prospect is already willing
+            to talk. That made inbound call automation a stronger opportunity than form-only capture.
+          </p>
+
+          <h3>2. Use voice AI for capture, not vague summaries</h3>
+          <p>
+            The assistant needed to extract structured details such as name, budget, location,
+            timeline, and callback preference, not just produce a transcript. That shaped the Vapi
+            assistant prompt and output schema from the beginning.
+          </p>
+
+          <h3>3. Normalize early to prevent downstream errors</h3>
+          <p>
+            Phone numbers and payload formats were normalized before any dedupe or storage step. This
+            was critical because small formatting differences created duplicate records and unreliable
+            matching.
+          </p>
+
+          <h3>4. Keep scoring logic explicit</h3>
+          <p>
+            Lead temperature was determined by clear business rules instead of vague model inference.
+            Budget, urgency, and callback intent became strong signals for deciding whether an agent
+            should be alerted immediately.
+          </p>
+
+          <h3>5. Build an MVP-grade CRM without overbuilding</h3>
+          <p>
+            Google Sheets was enough to prove the workflow end to end. It kept the prototype simple
+            while still supporting append-or-update behavior and structured lead storage.
+          </p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">☎️</span>
+      <h2>Voice Capture Layer</h2>
+    </div>
+    <div class="card">
+      <p>
+        Vapi handles the inbound call experience and collects buyer intent through conversation.
+        The call assistant captures structured outputs rather than leaving the workflow to parse
+        everything from a raw transcript later.
+      </p>
+      <div class="image-container">
+        <img src="../assets/call-log.png" alt="Vapi call logs showing inbound real estate calls">
+        <div class="image-caption">Vapi call logs showing inbound real estate calls, metadata, and successful call handling activity.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <h2>Workflow Architecture</h2>
+    </div>
+    <div class="card">
+      <p>
+        The n8n workflow receives the structured voice payload, flattens the data, maps lead fields,
+        calculates lead score, writes the lead into Google Sheets, and branches into separate email
+        alerts based on lead temperature.
+      </p>
+      <div class="image-container">
+        <img src="../assets/n8n-workflow.png" alt="n8n workflow for AI voice lead capture">
+        <div class="image-caption">Core n8n workflow showing payload flattening, field mapping, scoring, Google Sheets upsert behavior, and hot-lead alert branching.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🗂️</span>
+      <h2>Lead Storage & Deduplication</h2>
+    </div>
+    <div class="card">
+      <p>
+        Leads are stored in Google Sheets as a lightweight CRM. The workflow uses phone number
+        normalization and append-or-update logic so the same caller is not added repeatedly with
+        slightly different formats.
+      </p>
+      <div class="image-container">
+        <img src="../assets/lead-google-sheet.png" alt="Google Sheets lead CRM populated by the workflow">
+        <div class="image-caption">Structured lead sheet capturing caller details, intent, budget, timeline, score, and lead temperature in a simple CRM-style layout.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🔥</span>
+      <h2>Lead Scoring & Alerts</h2>
+    </div>
+    <div class="card">
+      <p>
+        Once the lead is scored, hot prospects trigger immediate email alerts to the team. The goal
+        is not just to record the lead, but to shorten the time between capture and meaningful follow-up.
+      </p>
+      <div class="image-container">
+        <img src="../assets/structured-output-alert.png" alt="Hot lead alert email generated by the workflow">
+        <div class="image-caption">Automated hot-lead email containing structured buyer details, callback request, score, temperature, and summary for fast agent action.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">🧩</span>
+      <h2>Challenges & Solutions</h2>
+    </div>
+    <div class="card">
+      <ul>
+        <li>Duplicate leads were caused by mismatched string and numeric phone values, so the workflow now normalizes phone numbers and treats the column as plain text.</li>
+        <li>Incorrect IF behavior came from using a literal string instead of an expression, so the routing logic was updated to use proper n8n expressions.</li>
+        <li>Missing phone numbers during testing came from web-interface simulations rather than real inbound calls, so validation shifted to actual call tests.</li>
+        <li>Nested payload mapping errors were fixed by adding a flattening code node before field mapping and scoring.</li>
+        <li>Vapi-to-n8n integration confusion was resolved by using the correct webhook/custom tool pattern with a server URL.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">👤</span>
+      <h2>My Contribution</h2>
+    </div>
+    <div class="card">
+      <p>
+        This was a personal, portfolio-focused project built end to end. I designed the automation
+        architecture, implemented the workflow, defined the scoring and deduplication logic, and
+        integrated the voice, spreadsheet, and alerting layers.
+      </p>
+      <ul>
+        <li>Built the n8n workflow and code-node processing logic.</li>
+        <li>Designed the lead scoring rules and hot-lead alert criteria.</li>
+        <li>Implemented phone normalization and duplicate-prevention logic.</li>
+        <li>Integrated Vapi, Google Sheets, Gmail, and n8n Cloud.</li>
+        <li>Shaped the system around production-style debugging and real call testing.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <span class="section-icon">💭</span>
+      <h2>Reflection & Learnings</h2>
+    </div>
+    <div class="card">
+      <p>
+        This project reinforced how much automation reliability depends on normalization, clear
+        branching rules, and testing with real-world payloads instead of idealized mocks. It also
+        showed that a small tool stack can still deliver a production-style workflow when the logic
+        is well structured.
+      </p>
+      <div class="highlight-box">
+        <p>
+          <strong>Key takeaway:</strong> strong automation systems are not just about connecting tools.
+          They depend on careful data handling, explicit decision logic, and fast feedback loops while debugging.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+}
+</script>
+</body>
+</html>
