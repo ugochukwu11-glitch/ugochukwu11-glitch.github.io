@@ -1,0 +1,6 @@
+about.md
+geminiAPI.md
+.env
+backend/.env
+backend/.env.local
+node_modules/

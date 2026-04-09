@@ -1,0 +1,11 @@
+{
+  "name": "portfolio-gemini-live-backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "@google/genai": "^1.24.0"
+  }
+}
