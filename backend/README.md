@@ -40,3 +40,22 @@ Then point the frontend widget to your backend URL with:
   window.VOICE_AGENT_TOKEN_ENDPOINT = "https://your-backend.example.com/api/gemini/live-token";
 </script>
 ```
+
+## Render deployment
+
+This repo also includes a root-level `render.yaml` so you can deploy the backend as a Render Blueprint.
+
+On Render:
+
+1. Create a new Blueprint from this GitHub repo.
+2. Let Render create the `portfolio-gemini-live-backend` web service.
+3. Set these required environment variables in Render:
+   - `GEMINI_API_KEY`
+   - `PORTFOLIO_KNOWLEDGE_TEXT`
+4. After the service is live, copy the backend URL and set the frontend token endpoint to:
+
+```text
+https://your-render-service.onrender.com/api/gemini/live-token
+```
+
+`PORTFOLIO_KNOWLEDGE_TEXT` should contain the private contents of `about.md` so that file never needs to be committed.
