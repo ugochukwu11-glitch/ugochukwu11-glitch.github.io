@@ -12,7 +12,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_VOICE_NAME
-        value: Sulafat
+        value: Zephyr
       - key: PORTFOLIO_KNOWLEDGE_TEXT
         sync: false
       - key: ALLOWED_ORIGINS

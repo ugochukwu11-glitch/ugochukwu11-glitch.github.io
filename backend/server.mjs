@@ -26,7 +26,7 @@ try {
 
 const PORT = Number(process.env.PORT || 8787);
 const MODEL = 'gemini-3.1-flash-live-preview';
-const VOICE_NAME = process.env.GEMINI_VOICE_NAME || 'Sulafat';
+const VOICE_NAME = process.env.GEMINI_VOICE_NAME || 'Zephyr';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
   .map((origin) => origin.trim())
