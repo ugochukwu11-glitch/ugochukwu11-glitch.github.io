@@ -2571,7 +2571,7 @@ body.dark .voice-widget-status {
     </div>
 
     <div class="voice-widget-actions">
-      <button class="voice-end-button" id="voiceStartButton" type="button" onclick="startVoiceAgent()">Talk now</button>
+      <button class="voice-end-button" id="voiceStartButton" type="button" onclick="startVoiceAgent()">Start voice chat</button>
     </div>
 
     <div class="voice-widget-preview">
@@ -2788,7 +2788,7 @@ function updateVoiceButton() {
     button.textContent = 'End voice chat';
     button.classList.add('end-state');
   } else {
-    button.textContent = 'Talk now';
+    button.textContent = 'Start voice chat';
     button.classList.remove('end-state');
   }
 }
@@ -3141,7 +3141,7 @@ function openVoiceWidget() {
   if (voiceWidgetState.isConnected) {
     setVoiceStatus('Connected and ready for another question.');
   } else if (resolveTokenEndpoint()) {
-    setVoiceStatus('Voice agent ready. Press Talk now to begin.');
+    setVoiceStatus('Voice agent ready. Press Start voice chat to begin.');
   } else {
     setVoiceStatus('Voice UI is ready. Add your backend token endpoint to make Gemini Live available on the public site.');
   }
