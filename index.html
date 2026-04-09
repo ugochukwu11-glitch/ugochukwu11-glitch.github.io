@@ -2747,6 +2747,8 @@ const voiceWidgetState = {
   activeSources: [],
   pendingAssistantTranscript: '',
   hasPlayedWelcome: false,
+  inactivityTimer: null,
+  inactivityLimitMs: 30000,
   lines: [
     'Assistant: Ask about Kelvin’s background, services, projects, or tools. The private knowledge base stays on the server.',
   ],
@@ -2770,6 +2772,24 @@ function addVoiceLine(role, message) {
   if (!message) return;
   voiceWidgetState.lines.push(`${role}: ${message.trim()}`);
   renderVoiceLog();
+}
+
+function clearVoiceInactivityTimer() {
+  if (!voiceWidgetState.inactivityTimer) return;
+  window.clearTimeout(voiceWidgetState.inactivityTimer);
+  voiceWidgetState.inactivityTimer = null;
+}
+
+function resetVoiceInactivityTimer() {
+  clearVoiceInactivityTimer();
+
+  if (!voiceWidgetState.isConnected || !voiceWidgetState.shouldCaptureAudio) {
+    return;
+  }
+
+  voiceWidgetState.inactivityTimer = window.setTimeout(() => {
+    stopVoiceAgent('Voice chat ended after 30 seconds of inactivity.');
+  }, voiceWidgetState.inactivityLimitMs);
 }
 
 function updateVoiceButton() {
@@ -2979,6 +2999,7 @@ async function startMicrophoneCapture() {
   voiceWidgetState.processorNode = processorNode;
   voiceWidgetState.mutedMonitorNode = mutedMonitorNode;
   voiceWidgetState.shouldCaptureAudio = true;
+  resetVoiceInactivityTimer();
 }
 
 async function requestGeminiWelcome() {
@@ -3020,6 +3041,7 @@ function handleSessionMessage(response) {
   }
 
   if (content.inputTranscription?.text) {
+    resetVoiceInactivityTimer();
     setVoiceStatus(`Listening: ${content.inputTranscription.text}`);
   }
 
@@ -3068,6 +3090,7 @@ async function requestLiveToken() {
 }
 
 function stopVoiceAgent(statusMessage = 'Voice session stopped.') {
+  clearVoiceInactivityTimer();
   voiceWidgetState.shouldCaptureAudio = false;
   voiceWidgetState.isConnecting = false;
   voiceWidgetState.isConnected = false;
@@ -3256,6 +3279,7 @@ async function sendVoiceText(forcedText = '') {
   addVoiceLine('Visitor', message);
   setVoiceStatus('Question sent. Waiting for Kelvin AI...');
   voiceWidgetState.pendingAssistantTranscript = '';
+  resetVoiceInactivityTimer();
   voiceWidgetState.session.sendRealtimeInput({ text: message });
 
   if (input && !forcedText) {
