@@ -1757,6 +1757,7 @@ body.dark .voice-widget-modal {
   text-align: center;
   gap: 10px;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .voice-widget-title {
@@ -1765,11 +1766,30 @@ body.dark .voice-widget-modal {
 }
 
 .voice-widget-subtitle {
-  max-width: 26ch;
+  max-width: 34ch;
   margin: 0;
   color: var(--text-muted);
   line-height: 1.7;
   font-size: 1rem;
+}
+
+.voice-close {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(23, 63, 53, 0.12);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--text-heading);
+  cursor: pointer;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+body.dark .voice-close {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .voice-orb-shell {
@@ -1884,17 +1904,23 @@ body.dark .voice-widget-status {
   min-height: 52px;
   padding: 14px 24px;
   border-radius: 999px;
-  border: 1px solid rgba(165, 58, 58, 0.16);
-  background: linear-gradient(135deg, #d46253, #b74435);
+  border: 1px solid rgba(178, 79, 42, 0.2);
+  background: linear-gradient(135deg, #c96d42, #b24f2a);
   color: #fff7f5;
   cursor: pointer;
   font-weight: 700;
-  box-shadow: 0 18px 34px rgba(183, 68, 53, 0.24);
+  box-shadow: 0 18px 34px rgba(178, 79, 42, 0.24);
 }
 
 .voice-end-button[disabled] {
   opacity: 0.72;
   cursor: wait;
+}
+
+.voice-end-button.end-state {
+  border-color: rgba(165, 58, 58, 0.16);
+  background: linear-gradient(135deg, #d46253, #b74435);
+  box-shadow: 0 18px 34px rgba(183, 68, 53, 0.24);
 }
 
 .voice-widget-preview,
@@ -2519,6 +2545,7 @@ body.dark .voice-widget-status {
 
   <div class="voice-widget-modal" id="voiceWidgetModal" aria-hidden="true">
     <div class="voice-widget-head">
+      <button class="voice-close" type="button" onclick="closeVoiceWidget()" aria-label="Close voice assistant">×</button>
       <div>
         <span class="mini-label">Gemini 3.1 Flash Live</span>
         <h2 class="voice-widget-title">Kelvin AI Assistant</h2>
@@ -2544,7 +2571,7 @@ body.dark .voice-widget-status {
     </div>
 
     <div class="voice-widget-actions">
-      <button class="voice-end-button" id="voiceStartButton" type="button" onclick="startVoiceAgent()">End voice chat</button>
+      <button class="voice-end-button" id="voiceStartButton" type="button" onclick="startVoiceAgent()">Talk now</button>
     </div>
 
     <div class="voice-widget-preview">
@@ -2752,11 +2779,18 @@ function updateVoiceButton() {
   if (voiceWidgetState.isConnecting) {
     button.disabled = true;
     button.textContent = 'Connecting...';
+    button.classList.remove('end-state');
     return;
   }
 
   button.disabled = false;
-  button.textContent = 'End voice chat';
+  if (voiceWidgetState.isConnected) {
+    button.textContent = 'End voice chat';
+    button.classList.add('end-state');
+  } else {
+    button.textContent = 'Talk now';
+    button.classList.remove('end-state');
+  }
 }
 
 function resolveTokenEndpoint() {
@@ -3107,8 +3141,7 @@ function openVoiceWidget() {
   if (voiceWidgetState.isConnected) {
     setVoiceStatus('Connected and ready for another question.');
   } else if (resolveTokenEndpoint()) {
-    setVoiceStatus('Opening Kelvin AI Assistant...');
-    startVoiceAgent();
+    setVoiceStatus('Voice agent ready. Press Talk now to begin.');
   } else {
     setVoiceStatus('Voice UI is ready. Add your backend token endpoint to make Gemini Live available on the public site.');
   }
