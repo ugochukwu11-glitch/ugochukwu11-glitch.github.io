@@ -2717,6 +2717,12 @@ function speakAssistantText(text) {
   window.speechSynthesis.speak(utterance);
 }
 
+function playWelcomeGreeting() {
+  const greeting = "Hello, I'm Kelvin's portfolio assistant. What would you like to know about Kelvin?";
+  addVoiceLine('Kelvin AI', greeting);
+  speakAssistantText(greeting);
+}
+
 function handleSessionMessage(response) {
   const content = response?.serverContent;
   if (!content) return;
@@ -2912,6 +2918,7 @@ async function startVoiceAgent() {
           addVoiceLine('System', 'Gemini Live connected.');
           startSpeechRecognition();
           setVoiceStatus('Connected. Ask about Kelvin by voice or type below.');
+          window.setTimeout(playWelcomeGreeting, 250);
         },
         onmessage: handleSessionMessage,
         onerror: (error) => {
