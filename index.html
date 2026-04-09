@@ -2632,6 +2632,7 @@ const voiceWidgetState = {
   tokenEndpoint: '',
   session: null,
   sessionToken: '',
+  sessionOpenedAt: 0,
   isConnecting: false,
   isConnected: false,
   shouldKeepListening: false,
@@ -2794,6 +2795,9 @@ function startSpeechRecognition() {
 
     recognition.onerror = (event) => {
       const errorCode = event?.error || 'unknown';
+      if (errorCode === 'aborted') {
+        return;
+      }
       if (errorCode === 'not-allowed') {
         setVoiceStatus('Microphone permission was denied. You can still type below.');
         voiceWidgetState.shouldKeepListening = false;
@@ -2901,11 +2905,16 @@ async function startVoiceAgent() {
       },
       callbacks: {
         onopen: () => {
+          voiceWidgetState.sessionOpenedAt = Date.now();
           voiceWidgetState.isConnecting = false;
           voiceWidgetState.isConnected = true;
           updateVoiceButton();
           addVoiceLine('System', 'Gemini Live connected.');
           startSpeechRecognition();
+          setVoiceStatus('Connected. Preparing Kelvin AI...');
+          session.sendRealtimeInput({
+            text: 'Greet the visitor briefly and invite them to ask about Kelvin’s background, tools, services, or project work.',
+          });
         },
         onmessage: handleSessionMessage,
         onerror: (error) => {
@@ -2914,7 +2923,12 @@ async function startVoiceAgent() {
         },
         onclose: () => {
           if (voiceWidgetState.isConnected || voiceWidgetState.isConnecting) {
-            stopVoiceAgent('Gemini Live disconnected.');
+            const livedMs = voiceWidgetState.sessionOpenedAt ? Date.now() - voiceWidgetState.sessionOpenedAt : 0;
+            const message =
+              livedMs > 0 && livedMs < 4000
+                ? 'Gemini Live disconnected too quickly. Reconnecting usually helps.'
+                : 'Gemini Live disconnected.';
+            stopVoiceAgent(message);
           }
         },
       },
