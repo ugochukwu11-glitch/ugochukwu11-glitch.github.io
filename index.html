@@ -2486,7 +2486,7 @@ body.dark .voice-input-row input {
     <ul class="voice-widget-list" style="margin-top:16px;">
       <li>Answers questions about my background, tools, services, and project work.</li>
       <li>Uses Gemini Live model `gemini-3.1-flash-live-preview` with ephemeral tokens.</li>
-      <li>Voice uses browser speech recognition with Gemini Live text responses read back aloud in the page.</li>
+      <li>Streams microphone audio to Gemini and plays back Gemini's native voice audio in the browser.</li>
     </ul>
   </div>
 
@@ -2635,8 +2635,17 @@ const voiceWidgetState = {
   sessionOpenedAt: 0,
   isConnecting: false,
   isConnected: false,
-  shouldKeepListening: false,
-  recognition: null,
+  shouldCaptureAudio: false,
+  inputAudioContext: null,
+  outputAudioContext: null,
+  mediaStream: null,
+  mediaSourceNode: null,
+  processorNode: null,
+  mutedMonitorNode: null,
+  playbackCursor: 0,
+  activeSources: [],
+  pendingAssistantTranscript: '',
+  hasPlayedWelcome: false,
   lines: [
     'Assistant: Ask about Kelvin’s background, services, projects, or tools. The private knowledge base stays on the server.',
   ],
@@ -2692,35 +2701,187 @@ function resolveTokenEndpoint() {
   return '';
 }
 
-function getSpeechRecognitionConstructor() {
-  return window.SpeechRecognition || window.webkitSpeechRecognition || null;
+function encodeBase64(uint8Array) {
+  let binary = '';
+  const chunkSize = 0x8000;
+  for (let i = 0; i < uint8Array.length; i += chunkSize) {
+    const chunk = uint8Array.subarray(i, i + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+  return btoa(binary);
 }
 
-function speakAssistantText(text) {
-  if (!('speechSynthesis' in window) || !text) return;
+function decodeBase64(base64) {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return bytes;
+}
 
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = 1.02;
-  utterance.pitch = 1;
-
-  const voices = window.speechSynthesis.getVoices();
-  const preferredVoice =
-    voices.find((voice) => /female/i.test(voice.name) && /^en/i.test(voice.lang)) ||
-    voices.find((voice) => /^en/i.test(voice.lang)) ||
-    null;
-
-  if (preferredVoice) {
-    utterance.voice = preferredVoice;
+function downsampleFloat32Buffer(buffer, inputSampleRate, targetSampleRate) {
+  if (targetSampleRate === inputSampleRate) {
+    return buffer;
   }
 
-  window.speechSynthesis.speak(utterance);
+  const ratio = inputSampleRate / targetSampleRate;
+  const newLength = Math.round(buffer.length / ratio);
+  const result = new Float32Array(newLength);
+  let offsetResult = 0;
+  let offsetBuffer = 0;
+
+  while (offsetResult < result.length) {
+    const nextOffsetBuffer = Math.round((offsetResult + 1) * ratio);
+    let accum = 0;
+    let count = 0;
+
+    for (let i = offsetBuffer; i < nextOffsetBuffer && i < buffer.length; i += 1) {
+      accum += buffer[i];
+      count += 1;
+    }
+
+    result[offsetResult] = count ? accum / count : 0;
+    offsetResult += 1;
+    offsetBuffer = nextOffsetBuffer;
+  }
+
+  return result;
 }
 
-function playWelcomeGreeting() {
-  const greeting = "Hello, I'm Kelvin's portfolio assistant. What would you like to know about Kelvin?";
-  addVoiceLine('Kelvin AI', greeting);
-  speakAssistantText(greeting);
+function float32ToInt16(float32Array) {
+  const int16 = new Int16Array(float32Array.length);
+  for (let i = 0; i < float32Array.length; i += 1) {
+    const sample = Math.max(-1, Math.min(1, float32Array[i]));
+    int16[i] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
+  }
+  return int16;
+}
+
+function stopPlaybackQueue() {
+  voiceWidgetState.activeSources.forEach((source) => {
+    try {
+      source.stop();
+    } catch (error) {
+      // no-op
+    }
+  });
+  voiceWidgetState.activeSources = [];
+  if (voiceWidgetState.outputAudioContext) {
+    voiceWidgetState.playbackCursor = voiceWidgetState.outputAudioContext.currentTime;
+  } else {
+    voiceWidgetState.playbackCursor = 0;
+  }
+}
+
+async function ensureOutputAudioContext() {
+  const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextCtor) {
+    throw new Error('This browser does not support Web Audio playback.');
+  }
+
+  if (!voiceWidgetState.outputAudioContext) {
+    voiceWidgetState.outputAudioContext = new AudioContextCtor({ sampleRate: 24000 });
+  }
+
+  if (voiceWidgetState.outputAudioContext.state === 'suspended') {
+    await voiceWidgetState.outputAudioContext.resume();
+  }
+
+  return voiceWidgetState.outputAudioContext;
+}
+
+async function playGeminiAudioChunk(base64Data) {
+  const audioContext = await ensureOutputAudioContext();
+  const pcmBytes = decodeBase64(base64Data);
+  const pcmSamples = new Int16Array(pcmBytes.buffer, pcmBytes.byteOffset, Math.floor(pcmBytes.byteLength / 2));
+  const float32 = new Float32Array(pcmSamples.length);
+
+  for (let i = 0; i < pcmSamples.length; i += 1) {
+    float32[i] = pcmSamples[i] / 0x8000;
+  }
+
+  const audioBuffer = audioContext.createBuffer(1, float32.length, 24000);
+  audioBuffer.copyToChannel(float32, 0);
+
+  const source = audioContext.createBufferSource();
+  source.buffer = audioBuffer;
+  source.connect(audioContext.destination);
+
+  const startAt = Math.max(audioContext.currentTime, voiceWidgetState.playbackCursor || 0);
+  source.start(startAt);
+  voiceWidgetState.playbackCursor = startAt + audioBuffer.duration;
+  voiceWidgetState.activeSources.push(source);
+
+  source.onended = () => {
+    voiceWidgetState.activeSources = voiceWidgetState.activeSources.filter((item) => item !== source);
+  };
+}
+
+async function startMicrophoneCapture() {
+  if (voiceWidgetState.mediaStream) return;
+
+  const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextCtor) {
+    throw new Error('This browser does not support microphone audio capture.');
+  }
+
+  const mediaStream = await navigator.mediaDevices.getUserMedia({
+    audio: {
+      channelCount: 1,
+      noiseSuppression: true,
+      echoCancellation: true,
+      autoGainControl: true,
+    },
+  });
+
+  const inputAudioContext = new AudioContextCtor();
+  if (inputAudioContext.state === 'suspended') {
+    await inputAudioContext.resume();
+  }
+
+  const mediaSourceNode = inputAudioContext.createMediaStreamSource(mediaStream);
+  const processorNode = inputAudioContext.createScriptProcessor(4096, 1, 1);
+  const mutedMonitorNode = inputAudioContext.createGain();
+  mutedMonitorNode.gain.value = 0;
+
+  processorNode.onaudioprocess = (event) => {
+    if (!voiceWidgetState.session || !voiceWidgetState.shouldCaptureAudio) return;
+
+    const channelData = event.inputBuffer.getChannelData(0);
+    const downsampled = downsampleFloat32Buffer(channelData, inputAudioContext.sampleRate, 16000);
+    const pcm16 = float32ToInt16(downsampled);
+    const uint8 = new Uint8Array(pcm16.buffer);
+
+    voiceWidgetState.session.sendRealtimeInput({
+      audio: {
+        data: encodeBase64(uint8),
+        mimeType: 'audio/pcm;rate=16000',
+      },
+    });
+  };
+
+  mediaSourceNode.connect(processorNode);
+  processorNode.connect(mutedMonitorNode);
+  mutedMonitorNode.connect(inputAudioContext.destination);
+
+  voiceWidgetState.mediaStream = mediaStream;
+  voiceWidgetState.inputAudioContext = inputAudioContext;
+  voiceWidgetState.mediaSourceNode = mediaSourceNode;
+  voiceWidgetState.processorNode = processorNode;
+  voiceWidgetState.mutedMonitorNode = mutedMonitorNode;
+  voiceWidgetState.shouldCaptureAudio = true;
+}
+
+async function requestGeminiWelcome() {
+  if (!voiceWidgetState.session || voiceWidgetState.hasPlayedWelcome) return;
+
+  voiceWidgetState.hasPlayedWelcome = true;
+  voiceWidgetState.pendingAssistantTranscript = '';
+  setVoiceStatus('Connected. Kelvin AI is greeting you...');
+  voiceWidgetState.session.sendRealtimeInput({
+    text: "Greet the visitor briefly in a warm professional tone and ask what they would like to know about Kelvin.",
+  });
 }
 
 function handleSessionMessage(response) {
@@ -2728,24 +2889,47 @@ function handleSessionMessage(response) {
   if (!content) return;
 
   if (content.interrupted) {
-    voiceWidgetState.pendingAssistantText = '';
-    window.speechSynthesis?.cancel();
+    voiceWidgetState.pendingAssistantTranscript = '';
+    stopPlaybackQueue();
     setVoiceStatus('Listening again after an interruption.');
   }
 
   const parts = content.modelTurn?.parts || [];
   for (const part of parts) {
+    if (part.inlineData?.data) {
+      playGeminiAudioChunk(part.inlineData.data).catch(() => {
+        setVoiceStatus('Gemini audio playback failed in this browser.');
+      });
+    }
+
     if (part.text) {
-      voiceWidgetState.pendingAssistantText += part.text;
+      voiceWidgetState.pendingAssistantTranscript += part.text;
     }
   }
 
-  if ((content.generationComplete || content.turnComplete) && voiceWidgetState.pendingAssistantText.trim()) {
-    const finalText = voiceWidgetState.pendingAssistantText.trim();
-    voiceWidgetState.pendingAssistantText = '';
+  if (content.outputTranscription?.text) {
+    voiceWidgetState.pendingAssistantTranscript = content.outputTranscription.text.trim();
+  }
+
+  if (content.inputTranscription?.text) {
+    setVoiceStatus(`Listening: ${content.inputTranscription.text}`);
+  }
+
+  if ((content.generationComplete || content.turnComplete) && voiceWidgetState.pendingAssistantTranscript.trim()) {
+    const finalText = voiceWidgetState.pendingAssistantTranscript.trim();
+    voiceWidgetState.pendingAssistantTranscript = '';
     addVoiceLine('Kelvin AI', finalText);
-    speakAssistantText(finalText);
     setVoiceStatus('Connected. Ask another question whenever you’re ready.');
+  }
+
+  if ((content.generationComplete || content.turnComplete) && voiceWidgetState.hasPlayedWelcome && !voiceWidgetState.mediaStream) {
+    startMicrophoneCapture()
+      .then(() => {
+        setVoiceStatus('Connected and listening. Ask what you would like to know about Kelvin.');
+      })
+      .catch((error) => {
+        setVoiceStatus(error instanceof Error ? error.message : 'Microphone access failed. You can still type below.');
+      });
   }
 }
 
@@ -2775,77 +2959,13 @@ async function requestLiveToken() {
   return payload;
 }
 
-function startSpeechRecognition() {
-  const Recognition = getSpeechRecognitionConstructor();
-  if (!Recognition) {
-    setVoiceStatus('Gemini Live is connected, but this browser does not support speech recognition. You can still type below.');
-    return;
-  }
-
-  if (!voiceWidgetState.recognition) {
-    const recognition = new Recognition();
-    recognition.continuous = true;
-    recognition.interimResults = false;
-    recognition.lang = 'en-NG';
-
-    recognition.onresult = (event) => {
-      for (let i = event.resultIndex; i < event.results.length; i += 1) {
-        const result = event.results[i];
-        if (!result.isFinal) continue;
-        const transcript = result[0]?.transcript?.trim();
-        if (transcript) {
-          sendVoiceText(transcript);
-        }
-      }
-    };
-
-    recognition.onerror = (event) => {
-      const errorCode = event?.error || 'unknown';
-      if (errorCode === 'aborted') {
-        return;
-      }
-      if (errorCode === 'not-allowed') {
-        setVoiceStatus('Microphone permission was denied. You can still type below.');
-        voiceWidgetState.shouldKeepListening = false;
-        return;
-      }
-      setVoiceStatus(`Speech recognition error: ${errorCode}. You can keep using the text box below.`);
-    };
-
-    recognition.onend = () => {
-      if (!voiceWidgetState.shouldKeepListening) return;
-      try {
-        recognition.start();
-      } catch (error) {
-        setVoiceStatus('Voice capture paused. Use the text box below or restart the live voice session.');
-      }
-    };
-
-    voiceWidgetState.recognition = recognition;
-  }
-
-  voiceWidgetState.shouldKeepListening = true;
-  try {
-    voiceWidgetState.recognition.start();
-    setVoiceStatus('Connected and listening. Ask about Kelvin’s background, tools, or projects.');
-  } catch (error) {
-    setVoiceStatus('Gemini Live is connected. Voice capture could not start automatically, but text chat is ready below.');
-  }
-}
-
 function stopVoiceAgent(statusMessage = 'Voice session stopped.') {
-  voiceWidgetState.shouldKeepListening = false;
+  voiceWidgetState.shouldCaptureAudio = false;
   voiceWidgetState.isConnecting = false;
   voiceWidgetState.isConnected = false;
   voiceWidgetState.pendingAssistantText = '';
-
-  if (voiceWidgetState.recognition) {
-    try {
-      voiceWidgetState.recognition.stop();
-    } catch (error) {
-      // no-op
-    }
-  }
+  voiceWidgetState.pendingAssistantTranscript = '';
+  voiceWidgetState.hasPlayedWelcome = false;
 
   if (voiceWidgetState.session) {
     try {
@@ -2855,9 +2975,51 @@ function stopVoiceAgent(statusMessage = 'Voice session stopped.') {
     }
   }
 
+  if (voiceWidgetState.processorNode) {
+    try {
+      voiceWidgetState.processorNode.disconnect();
+    } catch (error) {
+      // no-op
+    }
+  }
+
+  if (voiceWidgetState.mediaSourceNode) {
+    try {
+      voiceWidgetState.mediaSourceNode.disconnect();
+    } catch (error) {
+      // no-op
+    }
+  }
+
+  if (voiceWidgetState.mutedMonitorNode) {
+    try {
+      voiceWidgetState.mutedMonitorNode.disconnect();
+    } catch (error) {
+      // no-op
+    }
+  }
+
+  if (voiceWidgetState.mediaStream) {
+    voiceWidgetState.mediaStream.getTracks().forEach((track) => track.stop());
+  }
+
+  if (voiceWidgetState.inputAudioContext) {
+    voiceWidgetState.inputAudioContext.close().catch(() => {});
+  }
+
+  if (voiceWidgetState.outputAudioContext) {
+    voiceWidgetState.outputAudioContext.close().catch(() => {});
+  }
+
   voiceWidgetState.session = null;
   voiceWidgetState.sessionToken = '';
-  window.speechSynthesis?.cancel();
+  voiceWidgetState.mediaStream = null;
+  voiceWidgetState.inputAudioContext = null;
+  voiceWidgetState.outputAudioContext = null;
+  voiceWidgetState.mediaSourceNode = null;
+  voiceWidgetState.processorNode = null;
+  voiceWidgetState.mutedMonitorNode = null;
+  stopPlaybackQueue();
   updateVoiceButton();
   setVoiceStatus(statusMessage);
 }
@@ -2907,7 +3069,9 @@ async function startVoiceAgent() {
     const session = await ai.live.connect({
       model: tokenPayload.model || voiceWidgetState.model,
       config: {
-        responseModalities: ['TEXT'],
+        responseModalities: ['AUDIO'],
+        inputAudioTranscription: {},
+        outputAudioTranscription: {},
       },
       callbacks: {
         onopen: () => {
@@ -2916,9 +3080,7 @@ async function startVoiceAgent() {
           voiceWidgetState.isConnected = true;
           updateVoiceButton();
           addVoiceLine('System', 'Gemini Live connected.');
-          startSpeechRecognition();
-          setVoiceStatus('Connected. Ask about Kelvin by voice or type below.');
-          window.setTimeout(playWelcomeGreeting, 250);
+          setVoiceStatus(`Connected. Preparing Gemini voice${tokenPayload.voiceName ? ` (${tokenPayload.voiceName})` : ''}...`);
         },
         onmessage: handleSessionMessage,
         onerror: (error) => {
@@ -2940,6 +3102,7 @@ async function startVoiceAgent() {
 
     voiceWidgetState.session = session;
     voiceWidgetState.sessionToken = tokenPayload.token;
+    window.setTimeout(requestGeminiWelcome, 200);
   } catch (error) {
     voiceWidgetState.isConnecting = false;
     voiceWidgetState.isConnected = false;
@@ -2958,7 +3121,7 @@ async function copyVoiceSetup() {
     '3. Keep about.md private and load it only on the backend.',
     '4. Keep API keys server-side only. Do not expose them in GitHub Pages.',
     '5. Configure the frontend endpoint in window.VOICE_AGENT_TOKEN_ENDPOINT.',
-    '6. Browser speech should feed Gemini Live text input, with responses spoken back using speech synthesis.',
+    '6. Stream microphone PCM audio to Gemini Live and play Gemini native audio output in the browser.',
     '',
     'Suggested agent instruction:',
     "You are Kelvin Anowu's portfolio voice assistant. Answer using the private knowledge base only. If a question is outside that knowledge, say so clearly and direct the visitor to contact Kelvin."
@@ -2984,7 +3147,7 @@ async function sendVoiceText(forcedText = '') {
 
   addVoiceLine('Visitor', message);
   setVoiceStatus('Question sent. Waiting for Kelvin AI...');
-  voiceWidgetState.pendingAssistantText = '';
+  voiceWidgetState.pendingAssistantTranscript = '';
   voiceWidgetState.session.sendRealtimeInput({ text: message });
 
   if (input && !forcedText) {

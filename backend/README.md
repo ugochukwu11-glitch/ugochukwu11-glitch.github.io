@@ -20,6 +20,7 @@ GitHub Pages can host the static portfolio UI, but it cannot safely hold a Gemin
 Copy `.env.example` into `.env` on your server and fill in:
 
 - `GEMINI_API_KEY`
+- `GEMINI_VOICE_NAME` (optional, defaults to `Sulafat`)
 - `ALLOWED_ORIGINS`
 - `PORTFOLIO_KNOWLEDGE_PATH` or `PORTFOLIO_KNOWLEDGE_TEXT`
 
@@ -52,6 +53,7 @@ On Render:
 3. Set these required environment variables in Render:
    - `GEMINI_API_KEY`
    - `PORTFOLIO_KNOWLEDGE_TEXT`
+   - `GEMINI_VOICE_NAME` (optional, for example `Sulafat`)
 4. After the service is live, copy the backend URL and set the frontend token endpoint to:
 
 ```text

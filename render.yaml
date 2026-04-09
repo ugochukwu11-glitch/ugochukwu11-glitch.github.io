@@ -11,6 +11,8 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
+      - key: GEMINI_VOICE_NAME
+        value: Sulafat
       - key: PORTFOLIO_KNOWLEDGE_TEXT
         sync: false
       - key: ALLOWED_ORIGINS

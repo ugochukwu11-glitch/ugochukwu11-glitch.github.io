@@ -26,6 +26,7 @@ try {
 
 const PORT = Number(process.env.PORT || 8787);
 const MODEL = 'gemini-3.1-flash-live-preview';
+const VOICE_NAME = process.env.GEMINI_VOICE_NAME || 'Sulafat';
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
   .map((origin) => origin.trim())
@@ -108,9 +109,18 @@ async function createLiveToken() {
       liveConnectConstraints: {
         model: MODEL,
         config: {
-          responseModalities: ['TEXT'],
-          temperature: 0.4,
+          responseModalities: ['AUDIO'],
+          inputAudioTranscription: {},
+          outputAudioTranscription: {},
+          temperature: 0.5,
           sessionResumption: {},
+          speechConfig: {
+            voiceConfig: {
+              prebuiltVoiceConfig: {
+                voiceName: VOICE_NAME,
+              },
+            },
+          },
           systemInstruction: {
             parts: [{ text: buildSystemInstruction(knowledgeBase) }],
           },
@@ -123,6 +133,7 @@ async function createLiveToken() {
   return {
     token: token.name,
     model: MODEL,
+    voiceName: VOICE_NAME,
     expiresAt: expireTime,
     newSessionExpiresAt: newSessionExpireTime,
   };
