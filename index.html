@@ -2769,6 +2769,20 @@ async function requestLiveToken() {
   return payload;
 }
 
+function requestInitialGreeting() {
+  if (!voiceWidgetState.session) return;
+
+  try {
+    voiceWidgetState.pendingAssistantText = '';
+    voiceWidgetState.session.sendRealtimeInput({
+      text: 'Greet the visitor briefly and invite them to ask about Kelvin’s background, tools, services, or project work.',
+    });
+  } catch (error) {
+    addVoiceLine('System', 'Initial greeting could not be requested automatically.');
+    setVoiceStatus('Connected. Ask a question by voice or type below.');
+  }
+}
+
 function startSpeechRecognition() {
   const Recognition = getSpeechRecognitionConstructor();
   if (!Recognition) {
@@ -2912,9 +2926,6 @@ async function startVoiceAgent() {
           addVoiceLine('System', 'Gemini Live connected.');
           startSpeechRecognition();
           setVoiceStatus('Connected. Preparing Kelvin AI...');
-          session.sendRealtimeInput({
-            text: 'Greet the visitor briefly and invite them to ask about Kelvin’s background, tools, services, or project work.',
-          });
         },
         onmessage: handleSessionMessage,
         onerror: (error) => {
@@ -2936,6 +2947,7 @@ async function startVoiceAgent() {
 
     voiceWidgetState.session = session;
     voiceWidgetState.sessionToken = tokenPayload.token;
+    window.setTimeout(requestInitialGreeting, 150);
   } catch (error) {
     voiceWidgetState.isConnecting = false;
     voiceWidgetState.isConnected = false;
